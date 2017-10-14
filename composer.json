@@ -1,0 +1,33 @@
+{
+    "name": "lampager/laravel",
+    "description": "Rapid pagination for Laravel",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "mpyw",
+            "email": "ryosuke_i_628@yahoo.co.jp"
+        }
+    ],
+    "keywords": ["laravel", "illuminate", "pagination", "paginator", "offset", "limit"],
+    "autoload": {
+        "psr-4": {
+            "Lampager\\Laravel\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lampager\\Laravel\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^5.6 || ^7.0",
+        "lampager/core": "^0.1.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^3.5",
+        "laravel/framework": "^5.4",
+        "php-coveralls/php-coveralls": "^1.0",
+        "nilportugues/sql-query-formatter": "^1.2"
+    }
+}
