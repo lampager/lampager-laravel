@@ -1,5 +1,5 @@
 {
-    "name": "lampager/laravel",
+    "name": "lampager/lampager-laravel",
     "description": "Rapid pagination for Laravel",
     "type": "library",
     "license": "MIT",
@@ -22,7 +22,7 @@
     },
     "require": {
         "php": "^5.6 || ^7.0",
-        "lampager/core": "^0.1.0"
+        "lampager/lampager": "^0.1.0"
     },
     "require-dev": {
         "orchestra/testbench": "^3.5",

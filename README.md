@@ -2,9 +2,9 @@
 <img width="320" alt="lampager-laravel" src="https://user-images.githubusercontent.com/1351893/31755018-9ab0c8ae-b4d6-11e7-9310-dbc372998ee4.png">
 </p>
 <p align="center">
-<a href="https://travis-ci.org/lampager/laravel"><img src="https://travis-ci.org/lampager/laravel.svg?branch=master" alt="Build Status"></a>
-<a href="https://coveralls.io/github/lampager/laravel?branch=master"><img src="https://coveralls.io/repos/github/lampager/laravel/badge.svg?branch=master" alt="Coverage Status"></a>
-<a href="https://scrutinizer-ci.com/g/lampager/laravel/?branch=master"><img src="https://scrutinizer-ci.com/g/lampager/laravel/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality"></a>
+<a href="https://travis-ci.org/lampager/lampager-laravel"><img src="https://travis-ci.org/lampager/lampager-laravel.svg?branch=master" alt="Build Status"></a>
+<a href="https://coveralls.io/github/lampager/lampager-laravel?branch=master"><img src="https://coveralls.io/repos/github/lampager/lampager-laravel/badge.svg?branch=master" alt="Coverage Status"></a>
+<a href="https://scrutinizer-ci.com/g/lampager/lampager-laravel/?branch=master"><img src="https://scrutinizer-ci.com/g/lampager/lampager-laravel/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality"></a>
 </p>
 
 # Lampager for Laravel
@@ -15,12 +15,12 @@ Rapid pagination without using OFFSET
 
 - PHP: ^5.6 || ^7.0
 - Laravel: ^5.4
-- [lampager/core](https://github.com/lampager/core): ^0.1
+- [lampager/lampager](https://github.com/lampager/lampager): ^0.1
 
 ## Installing
 
 ```bash
-composer require lampager/laravel:^0.1.0
+composer require lampager/lampager-laravel:^0.1.0
 ```
 
 ## Basic Usage
@@ -146,7 +146,7 @@ And you'll get
 
 ## Classes
 
-Note: See also [lampager/core](https://github.com/lampager/core).
+Note: See also [lampager/lampager](https://github.com/lampager/lampager).
 
 | Name | Type | Description |
 |:---|:---|:---|
@@ -156,7 +156,7 @@ Note: See also [lampager/core](https://github.com/lampager/core).
 
 ## API
 
-Note: See also [lampager/core](https://github.com/lampager/core).
+Note: See also [lampager/lampager](https://github.com/lampager/lampager).
 
 ### Paginator::__construct()<br>Paginator::create()
 
