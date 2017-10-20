@@ -148,11 +148,11 @@ And you'll get
 
 Note: See also [lampager/lampager](https://github.com/lampager/lampager).
 
-| Name | Type | Description |
-|:---|:---|:---|
-| Laravel/`Paginator` | Class | Fluent factory implementation for Laravel |
-| Laravel/`Processor` | Class | Processor implementation for Laravel |
-| Laravel/`MacroServiceProvider` | Class | Enable macros chainable from QueryBuilder, ElqouentBuilder and Relation |
+| Name | Type | Parent Class | Description |
+|:---|:---|:---|:---|
+| Lampager\\Laravel\\`Paginator` | Class | Lampager\\`Paginator` | Fluent factory implementation for Laravel |
+| Lampager\\Laravel\\`Processor` | Class | Lampager\\`AbstractProcessor` | Processor implementation for Laravel |
+| Lampager\\Laravel\\`MacroServiceProvider` | Class | Illuminate\\Support\\`ServiceProvider` | Enable macros chainable from QueryBuilder, ElqouentBuilder and Relation |
 
 ## API
 
@@ -195,6 +195,12 @@ Perform configure + transform + process.
 ```php
 Paginator::paginate(array $cursor = []): \Illuminate\Support\Collection
 ```
+
+#### Arguments
+
+- **`(array)`** __*$cursor*__<br> Associative array that contains `$column => $value`. It must be **all-or-nothing**.
+  - For initial page, omit this parameter or pass empty array.
+  - For subsequent pages, pass all parameters. Partial parameters are not allowd.
 
 #### Return Value
 
