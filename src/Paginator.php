@@ -116,7 +116,7 @@ class Paginator extends BasePaginator
     protected function compileWhere($builder, Select $select)
     {
         $builder->where(function ($builder) use ($select) {
-            foreach ($select->where() ?: [] as $i => $group) {
+            foreach ($select->where() as $i => $group) {
                 foreach ($group as $j => $condition) {
                     $builder->{$i !== 0 && $j === 0 ? 'orWhere' : 'where'}(...$condition->toArray());
                 }
