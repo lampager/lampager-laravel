@@ -198,7 +198,7 @@ Paginator::paginate(\Lampager\Cursor|array $cursor = []): \Illuminate\Support\Co
 
 #### Arguments
 
-- **`(array)`** __*$cursor*__<br> Associative array that contains `$column => $value`. It must be **all-or-nothing**.
+- **`(mixed)`** __*$cursor*__<br> An associative array that contains `$column => $value` or an object that implements `\Lampager\Cursor`. It must be **all-or-nothing**.
   - For initial page, omit this parameter or pass empty array.
   - For subsequent pages, pass all parameters. Partial parameters are not allowd.
 
