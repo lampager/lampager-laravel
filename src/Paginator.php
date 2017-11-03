@@ -5,6 +5,7 @@ namespace Lampager\Laravel;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\Macroable;
 use Lampager\Concerns\HasProcessor;
+use Lampager\Contracts\Cursor;
 use Lampager\Paginator as BasePaginator;
 use Lampager\Query\Query;
 use Lampager\Query\Select;
@@ -54,10 +55,10 @@ class Paginator extends BasePaginator
     /**
      * Configure -> Transform.
      *
-     * @param  int[]|string[]                                                                                                            $cursor
+     * @param  Cursor|int[]|string[]                                                                                                            $cursor
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation|\Illuminate\Database\Query\Builder
      */
-    public function build(array $cursor = [])
+    public function build($cursor = [])
     {
         return $this->transform($this->configure($cursor));
     }
@@ -65,10 +66,10 @@ class Paginator extends BasePaginator
     /**
      * Execute query and paginate them.
      *
-     * @param  int[]|string[] $cursor
+     * @param  Cursor|int[]|string[] $cursor
      * @return Collection
      */
-    public function paginate(array $cursor = [])
+    public function paginate($cursor = [])
     {
         $query = $this->configure($cursor);
         return $this->process($query, $this->transform($query)->get());
