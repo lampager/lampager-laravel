@@ -233,5 +233,5 @@ Invoke Processor methods.
 ```php
 Paginator::useFormatter(Formatter|callable $formatter): $this
 Paginator::restoreFormatter(): $this
-Paginator::process(array $cursor = []): \Illuminate\Support\Collection
+Paginator::process(\Lampager\Query $query, \Illuminate\Database\Eloquent\Collection $rows): \Illuminate\Support\Collection
 ```
