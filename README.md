@@ -33,7 +33,7 @@ Register service provider.
         /*
          * Package Service Providers...
          */
-        mpyw\Lampage\Provider\IlluminateMacroServiceProvider::class,
+        Lampager\Laravel\MacroServiceProvider::class,
 ```
 
 Then you can chain `->lampager()` method from Query Builder, Eloquent Builder and Relation.
