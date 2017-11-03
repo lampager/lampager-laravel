@@ -7,7 +7,7 @@ use Illuminate\Support\Traits\Macroable;
 use Lampager\Concerns\HasProcessor;
 use Lampager\Contracts\Cursor;
 use Lampager\Paginator as BasePaginator;
-use Lampager\Query\Query;
+use Lampager\Query;
 use Lampager\Query\Select;
 use Lampager\Query\SelectOrUnionAll;
 use Lampager\Query\UnionAll;

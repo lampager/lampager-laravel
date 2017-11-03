@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Traits\Macroable;
 use Lampager\AbstractProcessor;
-use Lampager\Query\Query;
+use Lampager\Query;
 
 /**
  * Class Processor
