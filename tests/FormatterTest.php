@@ -4,7 +4,7 @@ namespace Lampager\Laravel\Tests;
 
 use Illuminate\Support\Collection;
 use Lampager\Laravel\Processor;
-use Lampager\Query\Query;
+use Lampager\Query;
 
 class FormatterTest extends TestCase
 {

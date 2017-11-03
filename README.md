@@ -185,7 +185,7 @@ Paginator::transform(Query $query): QueryBuilder|EloquentBuilder|Relation
 Perform configure + transform.
 
 ```php
-Paginator::build(array $cursor = []): QueryBuilder|EloquentBuilder|Relation
+Paginator::build(\Lampager\Cursor|array $cursor = []): QueryBuilder|EloquentBuilder|Relation
 ```
 
 ### Paginator::paginate()
@@ -193,7 +193,7 @@ Paginator::build(array $cursor = []): QueryBuilder|EloquentBuilder|Relation
 Perform configure + transform + process.
 
 ```php
-Paginator::paginate(array $cursor = []): \Illuminate\Support\Collection
+Paginator::paginate(\Lampager\Cursor|array $cursor = []): \Illuminate\Support\Collection
 ```
 
 #### Arguments
@@ -233,5 +233,5 @@ Invoke Processor methods.
 ```php
 Paginator::useFormatter(Formatter|callable $formatter): $this
 Paginator::restoreFormatter(): $this
-Paginator::process(array $cursor = []): \Illuminate\Support\Collection
+Paginator::process(\Lampager\Query $query, \Illuminate\Database\Eloquent\Collection $rows): \Illuminate\Support\Collection
 ```
