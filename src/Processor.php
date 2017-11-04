@@ -2,7 +2,6 @@
 
 namespace Lampager\Laravel;
 
-use Illuminate\Support\Collection as BasicCollection;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Traits\Macroable;
@@ -89,9 +88,6 @@ class Processor extends AbstractProcessor
      */
     protected function defaultFormat($rows, array $meta, Query $query)
     {
-        return new BasicCollection([
-            'records' => $rows,
-            'meta' => new BasicCollection($meta),
-        ]);
+        return new PaginationResult($rows, $meta);
     }
 }
