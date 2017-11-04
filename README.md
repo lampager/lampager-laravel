@@ -15,12 +15,12 @@ Rapid pagination without using OFFSET
 
 - PHP: ^5.6 || ^7.0
 - Laravel: ^5.4
-- [lampager/lampager](https://github.com/lampager/lampager): ^0.1
+- [lampager/lampager](https://github.com/lampager/lampager): ^0.3
 
 ## Installing
 
 ```bash
-composer require lampager/lampager-laravel:^0.1.1
+composer require lampager/lampager-laravel:^0.2.0
 ```
 
 ## Basic Usage
@@ -53,7 +53,8 @@ $result = App\Post::whereUserId(1)
     ->orderByDesc('created_at')
     ->orderByDesc('id')
     ->seekable()
-    ->paginate($cursor);
+    ->paginate($cursor)
+    ->toJson(JSON_PRETTY_PRINT);
 ```
 
 It will run the optimized query.
@@ -86,7 +87,7 @@ It will run the optimized query.
         `updated_at` < '2017-01-20 00:00:00'
     )
     ORDER BY `updated_at` DESC, `created_at` DESC, `id` DESC
-    LIMIT 4
+    LIMIT 6
 
 )
 ```
@@ -133,13 +134,13 @@ And you'll get
       "updated_at": "2017-01-18 00:00:00"
     }
   ],
-  "meta": {
-    "previous_cursor": null,
-    "next_cursor": {
-      "id": 6,
-      "created_at": "2017-01-14 00:00:00",
-      "updated_at": "2017-01-18 00:00:00"
-    }
+  "has_previous": false,
+  "previous_cursor": null,
+  "has_next": true,
+  "next_cursor": {
+    "updated_at": "2017-01-18 00:00:00",
+    "created_at": "2017-01-14 00:00:00",
+    "id": 6
   }
 }
 ```
@@ -152,7 +153,10 @@ Note: See also [lampager/lampager](https://github.com/lampager/lampager).
 |:---|:---|:---|:---|
 | Lampager\\Laravel\\`Paginator` | Class | Lampager\\`Paginator` | Fluent factory implementation for Laravel |
 | Lampager\\Laravel\\`Processor` | Class | Lampager\\`AbstractProcessor` | Processor implementation for Laravel |
+| Lampager\\Laravel\\`PaginationResult` | Class | Lampager\\`PaginationResult` | PaginationResult implementation for Laravel |
 | Lampager\\Laravel\\`MacroServiceProvider` | Class | Illuminate\\Support\\`ServiceProvider` | Enable macros chainable from QueryBuilder, ElqouentBuilder and Relation |
+
+`Paginator`, `Processor` and `PaginationResult` are macroable.
 
 ## API
 
@@ -193,7 +197,7 @@ Paginator::build(\Lampager\Cursor|array $cursor = []): QueryBuilder|EloquentBuil
 Perform configure + transform + process.
 
 ```php
-Paginator::paginate(\Lampager\Cursor|array $cursor = []): \Illuminate\Support\Collection
+Paginator::paginate(\Lampager\Cursor|array $cursor = []): \Lampager\Laravel\PaginationResult
 ```
 
 #### Arguments
@@ -204,26 +208,44 @@ Paginator::paginate(\Lampager\Cursor|array $cursor = []): \Illuminate\Support\Co
 
 #### Return Value
 
-Default format when using `Illuminate\Database\Eloquent\Builder`:
+e.g. 
+
+(Default format when using `\Illuminate\Database\Eloquent\Builder`)
 
 ```php
-new \Illuminate\Support\Collection([
-    'records' => new \Illuminate\Database\Eloquent\Collection([
-        new \Illuminate\Database\Eloquent\Model([...]),
-        new \Illuminate\Database\Eloquent\Model([...]),
-        new \Illuminate\Database\Eloquent\Model([...]),
-        ...,
-    ]),
-    'meta' => new \Illuminate\Support\Collection([
-        // IMPORTANT: Either of cursor does not exist when UNION ALL query is not executed.
-        'previous_cursor' => null,
-        'next_cursor => [
-            'updated_at' => '2017-01-01 00:02:00',
-            'created_at' => '2017-01-01 00:01:00',
-            'id' => 1,
-        ],
-    ])
-])
+object(Lampager\Laravel\PaginationResult)#1 (5) {
+  ["records"]=>
+  object(Illuminate\Database\Eloquent\Collection)#2 (1) {
+    ["items":protected]=>
+    array(5) {
+      [0]=>
+      object(App\Post)#2 (26) { ... }
+      [1]=>
+      object(App\Post)#3 (26) { ... }
+      [2]=>
+      object(App\Post)#4 (26) { ... }
+      [3]=>
+      object(App\Post)#5 (26) { ... }
+      [4]=>
+      object(App\Post)#6 (26) { ... }
+    }
+  }
+  ["hasPrevious"]=>
+  bool(false)
+  ["previousCursor"]=>
+  NULL
+  ["hasNext"]=>
+  bool(true)
+  ["nextCursor"]=>
+  array(2) {
+    ["updated_at"]=>
+    string(19) "2017-01-18 00:00:00"
+    ["created_at"]=>
+    string(19) "2017-01-14 00:00:00"
+    ["id"]=>
+    int(6)
+  }
+}
 ```
 
 ### Paginator::useFormatter()<br>Paginator::restoreFormatter()<br>Paginator::process()
@@ -234,4 +256,36 @@ Invoke Processor methods.
 Paginator::useFormatter(Formatter|callable $formatter): $this
 Paginator::restoreFormatter(): $this
 Paginator::process(\Lampager\Query $query, \Illuminate\Database\Eloquent\Collection $rows): \Illuminate\Support\Collection
+```
+
+### PaginationResult::toArray()<br>PaginationResult::jsonSerialize()
+
+Convert the object into array.
+
+**IMPORTANT: `camelCase` properties are converted into `snake_case` form.**
+
+```php
+PaginationResult::toArray(): array
+PaginationResult::jsonSerialize(): array
+```
+
+### PaginationResult::__call()
+
+Call macro or Collection methods.
+
+```php
+PaginationResult::__call(string $name, array $args): mixed
+```
+
+e.g.
+
+```php
+PaginationResult::macro('foo', function () {
+    return ...;
+});
+$foo = $result->foo();
+```
+
+```php
+$first = $result->first();
 ```
