@@ -31,7 +31,7 @@ class Paginator extends BasePaginator
     }
 
     /**
-     * IlluminateFactory constructor.
+     * Paginator constructor.
      *
      * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation|\Illuminate\Database\Query\Builder $builder
      */
@@ -55,7 +55,7 @@ class Paginator extends BasePaginator
     /**
      * Configure -> Transform.
      *
-     * @param  Cursor|int[]|string[]                                                                                                            $cursor
+     * @param  Cursor|int[]|string[]                                                                                                     $cursor
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation|\Illuminate\Database\Query\Builder
      */
     public function build($cursor = [])

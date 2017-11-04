@@ -8,11 +8,11 @@ class ProcessorTest extends TestCase
      * @param $expected
      * @param $actual
      */
-    protected function assertResultEquals($expected, $actual)
+    protected function assertResultSame($expected, $actual)
     {
-        $this->assertEquals(
-            json_decode(json_encode($expected)),
-            json_decode(json_encode($actual))
+        $this->assertSame(
+            json_decode(json_encode($expected), true),
+            json_decode(json_encode($actual), true)
         );
     }
 
@@ -21,23 +21,24 @@ class ProcessorTest extends TestCase
      */
     public function testAscendingForwardStartInclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
                     ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'next_cursor' => ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
-                ],
+                'has_previous' => null,
+                'previous_cursor' => null,
+                'has_next' => true,
+                'next_cursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => 2],
             ],
             Post::lampager()
-            ->forward()->limit(3)
-            ->orderBy('updated_at')
-            ->orderBy('id')
-            ->seekable()
-            ->paginate()
+                ->forward()->limit(3)
+                ->orderBy('updated_at')
+                ->orderBy('id')
+                ->seekable()
+                ->paginate()
         );
     }
 
@@ -46,16 +47,17 @@ class ProcessorTest extends TestCase
      */
     public function testAscendingForwardStartExclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
                     ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'next_cursor' => ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
+                'has_previous' => null,
+                'previous_cursor' => null,
+                'has_next' => true,
+                'next_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 5],
             ],
             Post::lampager()
                 ->forward()->limit(3)
@@ -72,17 +74,17 @@ class ProcessorTest extends TestCase
      */
     public function testAscendingForwardInclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
                     ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
-                    'next_cursor' => ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
-                ],
+                'has_previous' => true,
+                'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 1],
+                'has_next' => true,
+                'next_cursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => 4],
             ],
             Post::lampager()
                 ->forward()->limit(3)
@@ -98,17 +100,17 @@ class ProcessorTest extends TestCase
      */
     public function testAscendingForwardExclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
                     ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
                     ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                    'next_cursor' => null,
-                ],
+                'has_previous' => true,
+                'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 5],
+                'has_next' => false,
+                'next_cursor' => null,
             ],
             Post::lampager()
                 ->forward()->limit(3)
@@ -125,16 +127,17 @@ class ProcessorTest extends TestCase
      */
     public function testAscendingBackwardStartInclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
                     ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
                     ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
+                'has_previous' => true,
+                'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 3],
+                'has_next' => null,
+                'next_cursor' => null,
             ],
             Post::lampager()
                 ->backward()->limit(3)
@@ -150,16 +153,17 @@ class ProcessorTest extends TestCase
      */
     public function testAscendingBackwardStartExclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
                     ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
                     ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
+                'has_previous' => true,
+                'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 5],
+                'has_next' => null,
+                'next_cursor' => null,
             ],
             Post::lampager()
                 ->backward()->limit(3)
@@ -176,16 +180,16 @@ class ProcessorTest extends TestCase
      */
     public function testAscendingBackwardInclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
                     ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => null,
-                    'next_cursor' => ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
+                'has_previous' => false,
+                'previous_cursor' => null,
+                'has_next' => true,
+                'next_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 5],
             ],
             Post::lampager()
                 ->backward()->limit(3)
@@ -201,15 +205,15 @@ class ProcessorTest extends TestCase
      */
     public function testAscendingBackwardExclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
                     ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => null,
-                    'next_cursor' => ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
+                'has_previous' => false,
+                'previous_cursor' => null,
+                'has_next' => true,
+                'next_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 1],
             ],
             Post::lampager()
                 ->backward()->limit(3)
@@ -226,16 +230,17 @@ class ProcessorTest extends TestCase
      */
     public function testDescendingForwardStartInclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
                     ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
                     ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
                     ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'next_cursor' => ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
+                'has_previous' => null,
+                'previous_cursor' => null,
+                'has_next' => true,
+                'next_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 3],
             ],
             Post::lampager()
                 ->forward()->limit(3)
@@ -251,16 +256,17 @@ class ProcessorTest extends TestCase
      */
     public function testDescendingForwardStartExclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
                     ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
                     ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
                     ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'next_cursor' => ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
+                'has_previous' => null,
+                'previous_cursor' => null,
+                'has_next' => true,
+                'next_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 5],
             ],
             Post::lampager()
                 ->forward()->limit(3)
@@ -277,16 +283,16 @@ class ProcessorTest extends TestCase
      */
     public function testDescendingForwardInclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
                     ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                    'next_cursor' => null,
-                ],
+                'has_previous' => true,
+                'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 5],
+                'has_next' => false,
+                'next_cursor' => null,
             ],
             Post::lampager()
                 ->forward()->limit(3)
@@ -302,15 +308,15 @@ class ProcessorTest extends TestCase
      */
     public function testDescendingForwardExclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
                     ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
-                    'next_cursor' => null,
-                ],
+                'has_previous' => true,
+                'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 1],
+                'has_next' => false,
+                'next_cursor' => null,
             ],
             Post::lampager()
                 ->forward()->limit(3)
@@ -327,16 +333,17 @@ class ProcessorTest extends TestCase
      */
     public function testDescendingBackwardStartInclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
                     ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
-                ],
+                'has_previous' => true,
+                'previous_cursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => 2],
+                'has_next' => null,
+                'next_cursor' => null,
             ],
             Post::lampager()
                 ->backward()->limit(3)
@@ -352,16 +359,17 @@ class ProcessorTest extends TestCase
      */
     public function testDescendingBackwardStartExclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
                     ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
+                'has_previous' => true,
+                'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 5],
+                'has_next' => null,
+                'next_cursor' => null,
             ],
             Post::lampager()
                 ->backward()->limit(3)
@@ -378,17 +386,17 @@ class ProcessorTest extends TestCase
      */
     public function testDescendingBackwardInclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
                     ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
                     ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
-                    'next_cursor' => ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
+                'has_previous' => true,
+                'previous_cursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => 4],
+                'has_next' => true,
+                'next_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 1],
             ],
             Post::lampager()
                 ->backward()->limit(3)
@@ -404,17 +412,17 @@ class ProcessorTest extends TestCase
      */
     public function testDescendingBackwardExclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
                     ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
                     ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
                     ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => null,
-                    'next_cursor' => ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
+                'has_previous' => false,
+                'previous_cursor' => null,
+                'has_next' => true,
+                'next_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 5],
             ],
             Post::lampager()
                 ->backward()->limit(3)

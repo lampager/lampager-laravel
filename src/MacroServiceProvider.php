@@ -13,7 +13,7 @@ use Illuminate\Support\ServiceProvider;
 class MacroServiceProvider extends ServiceProvider
 {
     /**
-     * Register "lampage" macros.
+     * Register "lampager" macros.
      */
     public function register()
     {
