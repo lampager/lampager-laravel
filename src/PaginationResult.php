@@ -22,7 +22,7 @@ class PaginationResult extends BasePaginationResult implements \JsonSerializable
     /**
      * Make dynamic calls into the collection.
      *
-     * @param  string  $method
+     * @param  string $method
      * @param  array  $parameters
      * @return mixed
      */
@@ -62,7 +62,7 @@ class PaginationResult extends BasePaginationResult implements \JsonSerializable
     /**
      * Convert the object to its JSON representation.
      *
-     * @param  int  $options
+     * @param  int    $options
      * @return string
      */
     public function toJson($options = 0)
