@@ -2,7 +2,6 @@
 
 namespace Lampager\Laravel;
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\Macroable;
 use Lampager\Concerns\HasProcessor;
 use Lampager\Contracts\Cursor;
@@ -66,8 +65,8 @@ class Paginator extends BasePaginator
     /**
      * Execute query and paginate them.
      *
-     * @param  Cursor|int[]|string[] $cursor
-     * @return Collection
+     * @param  Cursor|int[]|string[]  $cursor
+     * @return mixed|PaginationResult
      */
     public function paginate($cursor = [])
     {
