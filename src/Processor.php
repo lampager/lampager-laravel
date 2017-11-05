@@ -34,9 +34,9 @@ class Processor extends AbstractProcessor
      * Return the n-th element of collection.
      * Must return null if not exists.
      *
-     * @param  mixed $rows
-     * @param  int   $offset
-     * @return mixed
+     * @param  Collection|Model[]|object[] $rows
+     * @param  int                         $offset
+     * @return Model|object
      */
     protected function offset($rows, $offset)
     {
@@ -49,7 +49,7 @@ class Processor extends AbstractProcessor
      * @param  Collection|Model[]|object[] $rows
      * @param  int                         $offset
      * @param  null|int                    $length
-     * @return mixed
+     * @return Collection|Model[]|object[]
      */
     protected function slice($rows, $offset, $length = null)
     {
@@ -71,7 +71,7 @@ class Processor extends AbstractProcessor
      * Reverse rows, like PHP function array_reverse().
      *
      * @param  Collection|Model[]|object[] $rows
-     * @return mixed
+     * @return Collection|Model[]|object[]
      */
     protected function reverse($rows)
     {
@@ -84,7 +84,7 @@ class Processor extends AbstractProcessor
      * @param  Collection|Model[]|object[] $rows
      * @param  array                       $meta
      * @param  Query                       $query
-     * @return mixed
+     * @return PaginationResult
      */
     protected function defaultFormat($rows, array $meta, Query $query)
     {
