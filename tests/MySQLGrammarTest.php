@@ -5,7 +5,7 @@ namespace Lampager\Laravel\Tests;
 use NilPortugues\Sql\QueryFormatter\Formatter;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
-class MySQLGrammerTest extends TestCase
+class MySQLGrammarTest extends TestCase
 {
     /**
      * @param \Illuminate\Foundation\Application $app
