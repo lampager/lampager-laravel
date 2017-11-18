@@ -147,7 +147,7 @@ And you'll get
 
 ### Attention
 
-Do not use eager loading constraints on `* to many` relations. Those query confuses Lampager.
+Do not use eager loading constraints on `* to many` relations. Those queries confuse Lampager.
 
 ```php
 App\Post::with('comments')->lampager() // BAD (post has many comments)
