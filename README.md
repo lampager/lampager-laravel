@@ -264,7 +264,7 @@ Invoke Processor methods.
 ```php
 Paginator::useFormatter(Formatter|callable $formatter): $this
 Paginator::restoreFormatter(): $this
-Paginator::process(\Lampager\Query $query, \Illuminate\Database\Eloquent\Collection $rows): \Illuminate\Support\Collection
+Paginator::process(\Lampager\Query $query, \Illuminate\Support\Collection|\Illuminate\Database\Eloquent\Collection $rows): \Lampager\Laravel\PaginationResult
 ```
 
 ### PaginationResult::toArray()<br>PaginationResult::jsonSerialize()
