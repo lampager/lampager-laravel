@@ -29,5 +29,12 @@
         "laravel/framework": "^5.4",
         "php-coveralls/php-coveralls": "^1.0",
         "nilportugues/sql-query-formatter": "^1.2"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Lampager\\Laravel\\MacroServiceProvider"
+            ]
+        }
     }
 }
