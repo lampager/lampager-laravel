@@ -20,7 +20,7 @@ Rapid pagination without using OFFSET
 ## Installing
 
 ```bash
-composer require lampager/lampager-laravel:^0.2.1
+composer require lampager/lampager-laravel:^0.2.2
 ```
 
 ## Basic Usage
