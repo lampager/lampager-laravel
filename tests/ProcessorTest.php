@@ -433,4 +433,45 @@ class ProcessorTest extends TestCase
                 ->paginate(['id' => 3, 'updated_at' => '2017-01-01 10:00:00'])
         );
     }
+
+    /**
+     * @test
+     */
+    public function testBelongsToMany()
+    {
+        $this->assertResultSame(
+            [
+                'records' => [
+                    ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
+                ],
+                'has_previous' => null,
+                'previous_cursor' => null,
+                'has_next' => true,
+                'next_cursor' => ['pivot_id' => 4],
+            ],
+            Tag::find(1)->posts()->withPivot('id')
+                ->lampager()
+                ->forward()->limit(3)
+                ->orderBy('pivot_id')
+                ->seekable()
+                ->paginate()
+        );
+    }
+
+    /**
+     * @test
+     * @expectedException \Exception
+     * @expectedExceptionMessage The column `id` is not included in the pivot "pivot".
+     */
+    public function testBelongsToManyWithoutPivotKey()
+    {
+        Tag::find(1)->posts()
+            ->lampager()
+            ->forward()->limit(3)
+            ->orderBy('pivot_id')
+            ->seekable()
+            ->paginate();
+    }
 }

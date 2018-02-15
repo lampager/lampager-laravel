@@ -4,6 +4,7 @@ namespace Lampager\Laravel;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Traits\Macroable;
 use Lampager\AbstractProcessor;
 use Lampager\Query;
@@ -18,6 +19,24 @@ class Processor extends AbstractProcessor
     use Macroable;
 
     /**
+     * @var mixed
+     */
+    protected $builder;
+
+    /**
+     * Get result.
+     *
+     * @param  Query                       $query
+     * @param  Collection|Model[]|object[] $rows
+     * @return mixed
+     */
+    public function process(Query $query, $rows)
+    {
+        $this->builder = $query->builder();
+        return parent::process($query, $rows);
+    }
+
+    /**
      * Return comparable value from a row.
      *
      * @param  mixed      $row
@@ -26,8 +45,48 @@ class Processor extends AbstractProcessor
      */
     protected function field($row, $column)
     {
+        if ($this->builder instanceof BelongsToMany && strpos($column, 'pivot_') === 0) {
+            return $this->pivotField($row, substr($column, 6), $this->pivotAccessor());
+        }
         $value = $row->$column;
         return is_object($value) ? (string)$value : $value;
+    }
+
+    /**
+     * Extract pivot from a row.
+     *
+     * @param  mixed      $row
+     * @param  string     $column
+     * @param  string     $accessor
+     * @throws \Exception
+     * @return int|string
+     */
+    protected function pivotField($row, $column, $accessor)
+    {
+        $pivot = $row->$accessor;
+        if (!isset($pivot->$column)) {
+            throw new \Exception("The column `$column` is not included in the pivot \"$accessor\".");
+        }
+        return $this->field($pivot, $column);
+    }
+
+    /**
+     * Extract pivot accessor from a relation.
+     *
+     * @return string
+     */
+    protected function pivotAccessor()
+    {
+        if (method_exists($this->builder, 'getPivotAccessor')) {
+            return $this->builder->getPivotAccessor();
+        }
+        static $invoker;
+        if (!$invoker) {
+            $invoker = function () {
+                return isset($this->accessor) ? $this->accessor : 'pivot';
+            };
+        }
+        return $invoker->bindTo($this->builder, $this->builder)->__invoke();
     }
 
     /**
