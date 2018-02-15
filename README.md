@@ -145,15 +145,6 @@ And you'll get
 }
 ```
 
-### Attention
-
-Do not use eager loading constraints on `* to many` relations. Those queries confuse Lampager.
-
-```php
-App\Post::with('comments')->lampager() // BAD (post has many comments)
-App\Post::with('user')->lampager() // GOOD (post belongs to user)
-```
-
 ## Classes
 
 Note: See also [lampager/lampager](https://github.com/lampager/lampager).
