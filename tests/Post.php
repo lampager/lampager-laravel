@@ -18,6 +18,8 @@ class Post extends Model
 
     public $timestamps = false;
 
+    protected $hidden = ['pivot'];
+
     protected $casts = [
         'id' => 'int',
         'updated_at' => 'datetime',
