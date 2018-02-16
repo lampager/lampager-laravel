@@ -442,21 +442,21 @@ class ProcessorTest extends TestCase
         $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
                 ],
-                'has_previous' => null,
-                'previous_cursor' => null,
+                'has_previous' => true,
+                'previous_cursor' => ['pivot_id' => 1],
                 'has_next' => true,
-                'next_cursor' => ['pivot_id' => 4],
+                'next_cursor' => ['pivot_id' => 5],
             ],
             Tag::find(1)->posts()->withPivot('id')
                 ->lampager()
                 ->forward()->limit(3)
                 ->orderBy('pivot_id')
                 ->seekable()
-                ->paginate()
+                ->paginate(['pivot_id' => 2])
         );
     }
 
