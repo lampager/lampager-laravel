@@ -15,7 +15,7 @@ Rapid pagination without using OFFSET
 
 - PHP: ^5.6 || ^7.0
 - Laravel: ^5.4
-- [lampager/lampager](https://github.com/lampager/lampager): ^0.3
+- [lampager/lampager](https://github.com/lampager/lampager): ^0.4
 
 ## Installing
 
