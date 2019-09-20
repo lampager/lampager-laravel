@@ -77,16 +77,7 @@ class Processor extends AbstractProcessor
      */
     protected function pivotAccessor()
     {
-        if (method_exists($this->builder, 'getPivotAccessor')) {
-            return $this->builder->getPivotAccessor();
-        }
-        static $invoker;
-        if (!$invoker) {
-            $invoker = function () {
-                return isset($this->accessor) ? $this->accessor : 'pivot';
-            };
-        }
-        return $invoker->bindTo($this->builder, $this->builder)->__invoke();
+        return $this->builder->getPivotAccessor();
     }
 
     /**
