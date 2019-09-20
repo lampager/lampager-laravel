@@ -462,11 +462,12 @@ class ProcessorTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Exception
-     * @expectedExceptionMessage The column `id` is not included in the pivot "pivot".
      */
     public function testBelongsToManyWithoutPivotKey()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The column `id` is not included in the pivot "pivot".');
+
         Tag::find(1)->posts()
             ->lampager()
             ->forward()->limit(3)
