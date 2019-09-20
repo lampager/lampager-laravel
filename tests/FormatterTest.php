@@ -54,19 +54,19 @@ class FormatterTest extends TestCase
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidFormatter()
     {
+        $this->expectException(\InvalidArgumentException::class);
         Post::lampager()->useProcessor(function () {});
     }
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidProcessor()
     {
+        $this->expectException(\InvalidArgumentException::class);
         Post::lampager()->useFormatter(__CLASS__);
     }
 }

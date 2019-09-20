@@ -21,12 +21,13 @@
         }
     },
     "require": {
-        "php": "^5.6 || ^7.0",
+        "php": "^7.1",
+        "ext-json": "*",
         "lampager/lampager": "^0.4"
     },
     "require-dev": {
-        "orchestra/testbench": "^3.5",
-        "laravel/framework": "^5.4",
+        "orchestra/testbench": "^4.0",
+        "laravel/framework": "^6.0",
         "php-coveralls/php-coveralls": "^1.0",
         "nilportugues/sql-query-formatter": "^1.2"
     },

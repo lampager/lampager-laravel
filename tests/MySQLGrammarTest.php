@@ -15,7 +15,7 @@ class MySQLGrammarTest extends TestCase
         // Skip SQLite setup and use default MySQL configuration
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         // Skip SQLite setup and use default MySQL configuration
         BaseTestCase::setUp();
