@@ -2,6 +2,8 @@
 
 namespace Lampager\Laravel;
 
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
@@ -13,7 +15,7 @@ use Lampager\PaginationResult as BasePaginationResult;
  * @see BasePaginationResult
  * @mixin Collection
  */
-class PaginationResult extends BasePaginationResult implements \JsonSerializable
+class PaginationResult extends BasePaginationResult implements \JsonSerializable, Arrayable, Jsonable
 {
     use Macroable {
         __call as macroCall;
