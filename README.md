@@ -145,6 +145,52 @@ And you'll get
 }
 ```
 
+## Resource Collection
+
+Lampager supports Laravel's API Resources.
+
+- [Eloquent: API Resources - Laravel - The PHP Framework For Web Artisans](https://laravel.com/docs/6.x/eloquent-resources)
+
+Use helper traits on Resource and ResourceCollection.
+
+```php
+use Illuminate\Http\Resources\Json\JsonResource;
+use Lampager\Laravel\LampagerResourceTrait;
+
+class PostResource extends JsonResource
+{
+    use LampagerResourceTrait;
+}
+```
+
+```php
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Lampager\Laravel\LampagerResourceCollectionTrait;
+
+class PostResourceCollection extends ResourceCollection
+{
+    use LampagerResourceCollectionTrait;
+}
+```
+
+```php
+$posts = App\Post::lampager()
+    ->orderByDesc('id')
+    ->paginate();
+
+return new PostResourceCollection($posts);
+```
+
+```json5
+{
+  "data": [/* ... */],
+  "has_previous": false,
+  "previous_cursor": null,
+  "has_next": true,
+  "next_cursor": {/* ... */}
+}
+```
+
 ## Classes
 
 Note: See also [lampager/lampager](https://github.com/lampager/lampager).
@@ -155,6 +201,8 @@ Note: See also [lampager/lampager](https://github.com/lampager/lampager).
 | Lampager\\Laravel\\`Processor` | Class | Lampager\\`AbstractProcessor` | Processor implementation for Laravel |
 | Lampager\\Laravel\\`PaginationResult` | Class | Lampager\\`PaginationResult` | PaginationResult implementation for Laravel |
 | Lampager\\Laravel\\`MacroServiceProvider` | Class | Illuminate\\Support\\`ServiceProvider` | Enable macros chainable from QueryBuilder, ElqouentBuilder and Relation |
+| Lampager\\Laravel\\`LampagerResourceTrait` | Trait | | Support for Laravel JsonResource |
+| Lampager\\Laravel\\`LampagerResourceCollectionTrait` | Trait | | Support for Laravel ResourceCollection |
 
 `Paginator`, `Processor` and `PaginationResult` are macroable.
 
