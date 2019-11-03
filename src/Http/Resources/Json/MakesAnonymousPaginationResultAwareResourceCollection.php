@@ -10,7 +10,7 @@ namespace Lampager\Laravel\Http\Resources\Json;
 trait MakesAnonymousPaginationResultAwareResourceCollection
 {
     /**
-     * Create new anonymous resource collection.
+     * Create a new anonymous resource collection.
      *
      * @param  mixed                                                       $resource
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
