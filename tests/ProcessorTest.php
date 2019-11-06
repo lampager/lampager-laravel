@@ -2,9 +2,6 @@
 
 namespace Lampager\Laravel\Tests;
 
-use Lampager\Laravel\Paginator;
-use Lampager\Laravel\Processor;
-
 class ProcessorTest extends TestCase
 {
     /**
@@ -503,79 +500,5 @@ class ProcessorTest extends TestCase
             ->orderBy('pivot_id')
             ->seekable()
             ->paginate();
-    }
-
-    /**
-     * @test
-     */
-    public function testProcessorWithBuilderCanRetrieveUnqualifiedCursor()
-    {
-        $this->assertResultSame(
-            [
-                'records' => [
-                    ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
-                'has_previous' => null,
-                'previous_cursor' => null,
-                'has_next' => true,
-                'next_cursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => 2],
-            ],
-            (new Processor())
-                ->process(
-                    (new Paginator(null))
-                        ->forward()->limit(3)
-                        ->orderBy('updated_at')
-                        ->orderBy('id')
-                        ->seekable()
-                        ->configure(),
-                    Post::lampager()
-                        ->forward()->limit(3)
-                        ->orderBy('updated_at')
-                        ->orderBy('id')
-                        ->seekable()
-                        ->build()
-                        ->get()
-                )
-        );
-    }
-
-    /**
-     * This is a bug demonstration.
-     *
-     * @test
-     */
-    public function testProcessorWithoutBuilderFailsToRetrieveQualifiedCursor()
-    {
-        $this->assertResultSame(
-            [
-                'records' => [
-                    ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
-                'has_previous' => null,
-                'previous_cursor' => null,
-                'has_next' => true,
-                'next_cursor' => ['posts.updated_at' => null, 'posts.id' => null], // Buggy behavior
-            ],
-            (new Processor())
-                ->process(
-                    (new Paginator(null))
-                        ->forward()->limit(3)
-                        ->orderBy('posts.updated_at')
-                        ->orderBy('posts.id')
-                        ->seekable()
-                        ->configure(),
-                    Post::lampager()
-                        ->forward()->limit(3)
-                        ->orderBy('posts.updated_at')
-                        ->orderBy('posts.id')
-                        ->seekable()
-                        ->build()
-                        ->get()
-                )
-        );
     }
 }

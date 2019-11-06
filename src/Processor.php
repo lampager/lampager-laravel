@@ -150,15 +150,8 @@ class Processor extends AbstractProcessor
      */
     protected function dropTablePrefix(string $column)
     {
-        if (!$this->builder) {
-            return $column;
-        }
+        $segments = explode('.', $column);
 
-        // e.g.
-        //   x -> "x" in Standard SQL
-        //     -> [x] in MS SQL
-        //     -> `x` in MySQL
-        $q = $this->builder->getConnection()->getQueryGrammar()->wrap('x')[0];
-        return preg_replace("/^(?:(?:{$q}[^{$q}]*?{$q}|\w*?)\.)*?(?:{$q}([^{$q}]*){$q}|(\w*))$/", '$1$2', $column);
+        return end($segments);
     }
 }
