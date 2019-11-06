@@ -45,6 +45,7 @@ class Processor extends AbstractProcessor
      */
     protected function field($row, $column)
     {
+        $column = static::dropTablePrefix($column);
         if ($this->builder instanceof BelongsToMany && strpos($column, 'pivot_') === 0) {
             return $this->pivotField($row, substr($column, 6), $this->pivotAccessor());
         }
@@ -139,5 +140,18 @@ class Processor extends AbstractProcessor
     protected function defaultFormat($rows, array $meta, Query $query)
     {
         return new PaginationResult($rows, $meta);
+    }
+
+    /**
+     * Drop table prefix on column name.
+     *
+     * @param  string $column
+     * @return string
+     */
+    protected static function dropTablePrefix(string $column)
+    {
+        $segments = explode('.', $column);
+
+        return end($segments);
     }
 }

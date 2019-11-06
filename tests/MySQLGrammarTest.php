@@ -434,7 +434,7 @@ class MySQLGrammarTest extends TestCase
     /**
      * @test
      */
-    public function testBelongsToMany()
+    public function testBelongsToManyOrderByPivot()
     {
         $cursor = ['pivot_id' => 2];
 
@@ -472,6 +472,52 @@ class MySQLGrammarTest extends TestCase
                     `post_tag`.`id` >= ?
                 )
                 order by `pivot_id` asc
+                limit 4
+            )
+        ', $builder->toSql());
+    }
+
+    /**
+     * @test
+     */
+    public function testBelongsToManyOrderBySource()
+    {
+        $cursor = ['posts.id' => 2];
+
+        $tag = new Tag();
+        $tag->id = 1;
+        $tag->exists = true;
+
+        $builder = $tag->posts()->withPivot('id')
+            ->lampager()
+            ->forward()->limit(3)
+            ->orderBy('posts.id')
+            ->seekable()
+            ->build($cursor);
+
+        $this->assertSqlEquals('
+            (
+                select * from `posts`
+                inner join `post_tag` on `posts`.`id` = `post_tag`.`post_id`
+                where `post_tag`.`tag_id` = ? AND (
+                    `posts`.`id` < ?
+                )
+                order by `posts`.`id` desc
+                limit 1
+            )
+            union all
+            (
+                select
+                    `posts`.*,
+                    `post_tag`.`tag_id` as `pivot_tag_id`,
+                    `post_tag`.`post_id` as `pivot_post_id`,
+                    `post_tag`.`id` as `pivot_id`
+                from `posts`
+                inner join `post_tag` on `posts`.`id` = `post_tag`.`post_id`
+                where `post_tag`.`tag_id` = ? AND (
+                    `posts`.`id` >= ?
+                )
+                order by `posts`.`id` asc
                 limit 4
             )
         ', $builder->toSql());

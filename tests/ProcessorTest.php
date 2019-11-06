@@ -437,7 +437,7 @@ class ProcessorTest extends TestCase
     /**
      * @test
      */
-    public function testBelongsToMany()
+    public function testBelongsToManyOrderByPivot()
     {
         $this->assertResultSame(
             [
@@ -457,6 +457,32 @@ class ProcessorTest extends TestCase
                 ->orderBy('pivot_id')
                 ->seekable()
                 ->paginate(['pivot_id' => 2])
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function testBelongsToManyOrderBySource()
+    {
+        $this->assertResultSame(
+            [
+                'records' => [
+                    ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
+                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
+                ],
+                'has_previous' => true,
+                'previous_cursor' => ['posts.id' => 1],
+                'has_next' => true,
+                'next_cursor' => ['posts.id' => 5],
+            ],
+            Tag::find(1)->posts()->withPivot('id')
+                ->lampager()
+                ->forward()->limit(3)
+                ->orderBy('posts.id')
+                ->seekable()
+                ->paginate(['posts.id' => 2])
         );
     }
 
