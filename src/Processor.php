@@ -45,6 +45,7 @@ class Processor extends AbstractProcessor
      */
     protected function field($row, $column)
     {
+        $column = $this->dropTablePrefix($column);
         if ($this->builder instanceof BelongsToMany && strpos($column, 'pivot_') === 0) {
             return $this->pivotField($row, substr($column, 6), $this->pivotAccessor());
         }
@@ -139,5 +140,25 @@ class Processor extends AbstractProcessor
     protected function defaultFormat($rows, array $meta, Query $query)
     {
         return new PaginationResult($rows, $meta);
+    }
+
+    /**
+     * Drop table prefix on column name.
+     *
+     * @param  string $column
+     * @return string
+     */
+    protected function dropTablePrefix(string $column)
+    {
+        if (!$this->builder) {
+            return $column;
+        }
+
+        // e.g.
+        //   x -> "x" in Standard SQL
+        //     -> [x] in MS SQL
+        //     -> `x` in MySQL
+        $q = $this->builder->getConnection()->getQueryGrammar()->wrap('x')[0];
+        return preg_replace("/^(?:(?:{$q}[^{$q}]*?{$q}|\w*?)\.)*?(?:{$q}([^{$q}]*){$q}|(\w*))$/", '$1$2', $column);
     }
 }
