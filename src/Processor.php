@@ -45,7 +45,7 @@ class Processor extends AbstractProcessor
      */
     protected function field($row, $column)
     {
-        $column = $this->dropTablePrefix($column);
+        $column = static::dropTablePrefix($column);
         if ($this->builder instanceof BelongsToMany && strpos($column, 'pivot_') === 0) {
             return $this->pivotField($row, substr($column, 6), $this->pivotAccessor());
         }
@@ -148,7 +148,7 @@ class Processor extends AbstractProcessor
      * @param  string $column
      * @return string
      */
-    protected function dropTablePrefix(string $column)
+    protected static function dropTablePrefix(string $column)
     {
         $segments = explode('.', $column);
 
