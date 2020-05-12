@@ -14,7 +14,7 @@ Rapid pagination without using OFFSET
 ## Requirements
 
 - PHP: ^7.1
-- Laravel: ^5.6 || ^6.0 || ^7.0
+- Laravel: ^5.5 || ^5.6 || ^6.0 || ^7.0
 - [lampager/lampager](https://github.com/lampager/lampager): ^0.4
 
 ## Installing
@@ -154,10 +154,10 @@ Lampager supports Laravel's API Resources.
 Use helper traits on Resource and ResourceCollection.
 
 ```php
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\Resource;
 use Lampager\Laravel\LampagerResourceTrait;
 
-class PostResource extends JsonResource
+class PostResource extends Resource
 {
     use LampagerResourceTrait;
 }
@@ -201,7 +201,7 @@ Note: See also [lampager/lampager](https://github.com/lampager/lampager).
 | Lampager\\Laravel\\`Processor` | Class | Lampager\\`AbstractProcessor` | Processor implementation for Laravel |
 | Lampager\\Laravel\\`PaginationResult` | Class | Lampager\\`PaginationResult` | PaginationResult implementation for Laravel |
 | Lampager\\Laravel\\`MacroServiceProvider` | Class | Illuminate\\Support\\`ServiceProvider` | Enable macros chainable from QueryBuilder, ElqouentBuilder and Relation |
-| Lampager\\Laravel\\`LampagerResourceTrait` | Trait | | Support for Laravel JsonResource |
+| Lampager\\Laravel\\`LampagerResourceTrait` | Trait | | Support for Laravel Resource |
 | Lampager\\Laravel\\`LampagerResourceCollectionTrait` | Trait | | Support for Laravel ResourceCollection |
 
 `Paginator`, `Processor` and `PaginationResult` are macroable.

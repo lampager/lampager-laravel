@@ -2,13 +2,12 @@
 
 namespace Lampager\Laravel\Tests;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use Lampager\Laravel\LampagerResourceTrait;
 
 /**
  * Class PostResource
  */
-class PostResource extends JsonResource
+class PostResource extends Resource
 {
     use LampagerResourceTrait;
 
