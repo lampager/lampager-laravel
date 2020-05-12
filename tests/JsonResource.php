@@ -12,12 +12,10 @@ if (class_exists(BaseJsonResource::class)) {
     {
     }
 } else {
-    use Illuminate\Http\Resources\Json\Resource as BaseResource;
-
     /**
      * To support testing until Laravel version 7.
      */
-    class JsonResource extends BaseResource
+    class JsonResource extends \Illuminate\Http\Resources\Json\Resource
     {
     }
 }

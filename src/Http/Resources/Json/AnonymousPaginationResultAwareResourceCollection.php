@@ -8,7 +8,7 @@ use Lampager\Laravel\Http\Resources\CollectsPaginationResult;
 /**
  * Class AnonymousPaginationResultAwareResourceCollection
  *
- * @mixin \Illuminate\Http\Resources\Json\Resource
+ * @mixin \Illuminate\Http\Resources\Json\JsonResource
  */
 class AnonymousPaginationResultAwareResourceCollection extends AnonymousResourceCollection
 {

@@ -5,7 +5,7 @@ namespace Lampager\Laravel\Http\Resources\Json;
 /**
  * Trait MakesAnonymousPaginationResultAwareResourceCollection
  *
- * @mixin \Illuminate\Http\Resources\Json\Resource
+ * @mixin \Illuminate\Http\Resources\Json\JsonResource
  */
 trait MakesAnonymousPaginationResultAwareResourceCollection
 {
