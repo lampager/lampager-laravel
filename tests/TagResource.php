@@ -2,7 +2,6 @@
 
 namespace Lampager\Laravel\Tests;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use Lampager\Laravel\LampagerResourceTrait;
 
 /**
