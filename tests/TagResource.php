@@ -7,7 +7,7 @@ use Lampager\Laravel\LampagerResourceTrait;
 /**
  * Class TagResource
  */
-class TagResource extends Resource
+class TagResource extends JsonResource
 {
     use LampagerResourceTrait;
 

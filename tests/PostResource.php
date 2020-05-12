@@ -7,7 +7,7 @@ use Lampager\Laravel\LampagerResourceTrait;
 /**
  * Class PostResource
  */
-class PostResource extends Resource
+class PostResource extends JsonResource
 {
     use LampagerResourceTrait;
 
