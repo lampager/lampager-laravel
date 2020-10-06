@@ -24,9 +24,9 @@ class ProcessorTest extends TestCase
         $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => 1, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
+                    ['id' => 3, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
+                    ['id' => 5, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
                 ],
                 'has_previous' => null,
                 'previous_cursor' => null,
@@ -50,9 +50,9 @@ class ProcessorTest extends TestCase
         $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => 1, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
+                    ['id' => 3, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
+                    ['id' => 5, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
                 ],
                 'has_previous' => null,
                 'previous_cursor' => null,
@@ -77,9 +77,9 @@ class ProcessorTest extends TestCase
         $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
+                    ['id' => 3, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
+                    ['id' => 5, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
+                    ['id' => 2, 'updated_at' => EloquentDate::format('2017-01-01 11:00:00')],
                 ],
                 'has_previous' => true,
                 'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 1],
@@ -103,9 +103,9 @@ class ProcessorTest extends TestCase
         $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
-                    ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
+                    ['id' => 5, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
+                    ['id' => 2, 'updated_at' => EloquentDate::format('2017-01-01 11:00:00')],
+                    ['id' => 4, 'updated_at' => EloquentDate::format('2017-01-01 11:00:00')],
                 ],
                 'has_previous' => true,
                 'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 5],
@@ -130,9 +130,9 @@ class ProcessorTest extends TestCase
         $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
-                    ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
+                    ['id' => 5, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
+                    ['id' => 2, 'updated_at' => EloquentDate::format('2017-01-01 11:00:00')],
+                    ['id' => 4, 'updated_at' => EloquentDate::format('2017-01-01 11:00:00')],
                 ],
                 'has_previous' => true,
                 'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 3],
@@ -156,9 +156,9 @@ class ProcessorTest extends TestCase
         $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
-                    ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
+                    ['id' => 5, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
+                    ['id' => 2, 'updated_at' => EloquentDate::format('2017-01-01 11:00:00')],
+                    ['id' => 4, 'updated_at' => EloquentDate::format('2017-01-01 11:00:00')],
                 ],
                 'has_previous' => true,
                 'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 5],
@@ -183,8 +183,8 @@ class ProcessorTest extends TestCase
         $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => 1, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
+                    ['id' => 3, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
                 ],
                 'has_previous' => false,
                 'previous_cursor' => null,
@@ -208,7 +208,7 @@ class ProcessorTest extends TestCase
         $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => 1, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
                 ],
                 'has_previous' => false,
                 'previous_cursor' => null,
@@ -233,9 +233,9 @@ class ProcessorTest extends TestCase
         $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
-                    ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => 4, 'updated_at' => EloquentDate::format('2017-01-01 11:00:00')],
+                    ['id' => 2, 'updated_at' => EloquentDate::format('2017-01-01 11:00:00')],
+                    ['id' => 5, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
                 ],
                 'has_previous' => null,
                 'previous_cursor' => null,
@@ -259,9 +259,9 @@ class ProcessorTest extends TestCase
         $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
-                    ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => 4, 'updated_at' => EloquentDate::format('2017-01-01 11:00:00')],
+                    ['id' => 2, 'updated_at' => EloquentDate::format('2017-01-01 11:00:00')],
+                    ['id' => 5, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
                 ],
                 'has_previous' => null,
                 'previous_cursor' => null,
@@ -286,8 +286,8 @@ class ProcessorTest extends TestCase
         $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => 3, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
+                    ['id' => 1, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
                 ],
                 'has_previous' => true,
                 'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 5],
@@ -311,7 +311,7 @@ class ProcessorTest extends TestCase
         $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => 1, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
                 ],
                 'has_previous' => true,
                 'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 1],
@@ -336,9 +336,9 @@ class ProcessorTest extends TestCase
         $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => 5, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
+                    ['id' => 3, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
+                    ['id' => 1, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
                 ],
                 'has_previous' => true,
                 'previous_cursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => 2],
@@ -362,9 +362,9 @@ class ProcessorTest extends TestCase
         $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => 5, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
+                    ['id' => 3, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
+                    ['id' => 1, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
                 ],
                 'has_previous' => true,
                 'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 5],
@@ -389,9 +389,9 @@ class ProcessorTest extends TestCase
         $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => 2, 'updated_at' => EloquentDate::format('2017-01-01 11:00:00')],
+                    ['id' => 5, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
+                    ['id' => 3, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
                 ],
                 'has_previous' => true,
                 'previous_cursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => 4],
@@ -415,9 +415,9 @@ class ProcessorTest extends TestCase
         $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
-                    ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => 4, 'updated_at' => EloquentDate::format('2017-01-01 11:00:00')],
+                    ['id' => 2, 'updated_at' => EloquentDate::format('2017-01-01 11:00:00')],
+                    ['id' => 5, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
                 ],
                 'has_previous' => false,
                 'previous_cursor' => null,
@@ -442,9 +442,9 @@ class ProcessorTest extends TestCase
         $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
+                    ['id' => 3, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
+                    ['id' => 5, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
+                    ['id' => 2, 'updated_at' => EloquentDate::format('2017-01-01 11:00:00')],
                 ],
                 'has_previous' => true,
                 'previous_cursor' => ['pivot_id' => 1],
@@ -468,9 +468,9 @@ class ProcessorTest extends TestCase
         $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
-                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
+                    ['id' => 2, 'updated_at' => EloquentDate::format('2017-01-01 11:00:00')],
+                    ['id' => 3, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
+                    ['id' => 4, 'updated_at' => EloquentDate::format('2017-01-01 11:00:00')],
                 ],
                 'has_previous' => true,
                 'previous_cursor' => ['posts.id' => 1],
