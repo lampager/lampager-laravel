@@ -52,17 +52,17 @@ class ResourceTest extends TestCase
         $expected = [
             [
                 'id' => 3,
-                'updated_at' => '2017-01-01 10:00:00',
+                'updated_at' => EloquentDate::format('2017-01-01 10:00:00'),
                 'post_resource' => true,
             ],
             [
                 'id' => 5,
-                'updated_at' => '2017-01-01 10:00:00',
+                'updated_at' => EloquentDate::format('2017-01-01 10:00:00'),
                 'post_resource' => true,
             ],
             [
                 'id' => 2,
-                'updated_at' => '2017-01-01 11:00:00',
+                'updated_at' => EloquentDate::format('2017-01-01 11:00:00'),
                 'post_resource' => true,
             ],
         ];
@@ -85,17 +85,17 @@ class ResourceTest extends TestCase
             'data' => [
                 [
                     'id' => 3,
-                    'updated_at' => '2017-01-01 10:00:00',
+                    'updated_at' => EloquentDate::format('2017-01-01 10:00:00'),
                     'post_resource' => true,
                 ],
                 [
                     'id' => 5,
-                    'updated_at' => '2017-01-01 10:00:00',
+                    'updated_at' => EloquentDate::format('2017-01-01 10:00:00'),
                     'post_resource' => true,
                 ],
                 [
                     'id' => 2,
-                    'updated_at' => '2017-01-01 11:00:00',
+                    'updated_at' => EloquentDate::format('2017-01-01 11:00:00'),
                     'post_resource' => true,
                 ],
             ],
@@ -128,17 +128,17 @@ class ResourceTest extends TestCase
             'data' => [
                 [
                     'id' => 3,
-                    'updated_at' => '2017-01-01 10:00:00',
+                    'updated_at' => EloquentDate::format('2017-01-01 10:00:00'),
                     'post_resource' => true,
                 ],
                 [
                     'id' => 5,
-                    'updated_at' => '2017-01-01 10:00:00',
+                    'updated_at' => EloquentDate::format('2017-01-01 10:00:00'),
                     'post_resource' => true,
                 ],
                 [
                     'id' => 2,
-                    'updated_at' => '2017-01-01 11:00:00',
+                    'updated_at' => EloquentDate::format('2017-01-01 11:00:00'),
                     'post_resource' => true,
                 ],
             ],
@@ -171,17 +171,17 @@ class ResourceTest extends TestCase
             'data' => [
                 [
                     'id' => 3,
-                    'updated_at' => '2017-01-01 10:00:00',
+                    'updated_at' => EloquentDate::format('2017-01-01 10:00:00'),
                     'post_resource' => true,
                 ],
                 [
                     'id' => 5,
-                    'updated_at' => '2017-01-01 10:00:00',
+                    'updated_at' => EloquentDate::format('2017-01-01 10:00:00'),
                     'post_resource' => true,
                 ],
                 [
                     'id' => 2,
-                    'updated_at' => '2017-01-01 11:00:00',
+                    'updated_at' => EloquentDate::format('2017-01-01 11:00:00'),
                     'post_resource' => true,
                 ],
             ],
@@ -237,17 +237,17 @@ class ResourceTest extends TestCase
             'data' => [
                 [
                     'id' => 3,
-                    'updated_at' => '2017-01-01 10:00:00',
+                    'updated_at' => EloquentDate::format('2017-01-01 10:00:00'),
                     'post_resource' => true,
                 ],
                 [
                     'id' => 5,
-                    'updated_at' => '2017-01-01 10:00:00',
+                    'updated_at' => EloquentDate::format('2017-01-01 10:00:00'),
                     'post_resource' => true,
                 ],
                 [
                     'id' => 2,
-                    'updated_at' => '2017-01-01 11:00:00',
+                    'updated_at' => EloquentDate::format('2017-01-01 11:00:00'),
                     'post_resource' => true,
                 ],
             ],

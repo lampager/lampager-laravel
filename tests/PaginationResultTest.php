@@ -59,7 +59,7 @@ class PaginationResultTest extends TestCase
             ->paginate(['id' => 3, 'updated_at' => '2017-01-01 10:00:00']);
 
         $this->assertResultSame(
-            ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
+            ['id' => 3, 'updated_at' => EloquentDate::format('2017-01-01 10:00:00')],
             $result->first()
         );
     }
@@ -77,20 +77,22 @@ class PaginationResultTest extends TestCase
             ->paginate(['id' => 3, 'updated_at' => '2017-01-01 10:00:00'])
             ->toJson(JSON_PRETTY_PRINT);
 
-        $expected = <<<'EOD'
+        $format = [EloquentDate::class, 'format'];
+
+        $expected = <<<EOD
 {
     "records": [
         {
             "id": 3,
-            "updated_at": "2017-01-01 10:00:00"
+            "updated_at": "{$format('2017-01-01 10:00:00')}"
         },
         {
             "id": 5,
-            "updated_at": "2017-01-01 10:00:00"
+            "updated_at": "{$format('2017-01-01 10:00:00')}"
         },
         {
             "id": 2,
-            "updated_at": "2017-01-01 11:00:00"
+            "updated_at": "{$format('2017-01-01 11:00:00')}"
         }
     ],
     "has_previous": true,

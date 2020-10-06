@@ -2,10 +2,28 @@ language: php
 
 matrix:
   exclude:
+    # [6.x] PHP 7.4 support
+    # https://github.com/laravel/framework/pull/29482/files
+    - env: LARAVEL_VERSION=5.8.* TESTBENCH_VERSION=3.8.*
+      php: 7.4
+    - env: LARAVEL_VERSION=5.7.* TESTBENCH_VERSION=3.7.*
+      php: 7.4
+    - env: LARAVEL_VERSION=5.6.* TESTBENCH_VERSION=3.6.*
+      php: 7.4
+    - env: LARAVEL_VERSION=5.5.* TESTBENCH_VERSION=3.5.*
+      php: 7.4
+    # -------
+    - env: LARAVEL_VERSION=^8.0 TESTBENCH_VERSION=^6.0
+      php: 7.2
+    - env: LARAVEL_VERSION=^8.0 TESTBENCH_VERSION=^6.0
+      php: 7.1
+    - env: LARAVEL_VERSION=^7.0 TESTBENCH_VERSION=^5.0
+      php: 7.1
     - env: LARAVEL_VERSION=^6.0 TESTBENCH_VERSION=^4.0
       php: 7.1
 
 php:
+  - 7.4
   - 7.3
   - 7.2
   - 7.1
@@ -16,6 +34,8 @@ cache:
     - $HOME/.composer/cache
 
 env:
+  - LARAVEL_VERSION=^8.0 TESTBENCH_VERSION=^6.0
+  - LARAVEL_VERSION=^7.0 TESTBENCH_VERSION=^5.0
   - LARAVEL_VERSION=^6.0 TESTBENCH_VERSION=^4.0
   - LARAVEL_VERSION=5.8.* TESTBENCH_VERSION=3.8.*
   - LARAVEL_VERSION=5.7.* TESTBENCH_VERSION=3.7.*
