@@ -2,10 +2,17 @@ language: php
 
 matrix:
   exclude:
+    - env: LARAVEL_VERSION=^8.0 TESTBENCH_VERSION=^6.0
+      php: 7.2
+    - env: LARAVEL_VERSION=^8.0 TESTBENCH_VERSION=^6.0
+      php: 7.1
+    - env: LARAVEL_VERSION=^7.0 TESTBENCH_VERSION=^5.0
+      php: 7.1
     - env: LARAVEL_VERSION=^6.0 TESTBENCH_VERSION=^4.0
       php: 7.1
 
 php:
+  - 7.4
   - 7.3
   - 7.2
   - 7.1
@@ -16,6 +23,8 @@ cache:
     - $HOME/.composer/cache
 
 env:
+  - LARAVEL_VERSION=^8.0 TESTBENCH_VERSION=^6.0
+  - LARAVEL_VERSION=^7.0 TESTBENCH_VERSION=^5.0
   - LARAVEL_VERSION=^6.0 TESTBENCH_VERSION=^4.0
   - LARAVEL_VERSION=5.8.* TESTBENCH_VERSION=3.8.*
   - LARAVEL_VERSION=5.7.* TESTBENCH_VERSION=3.7.*
