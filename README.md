@@ -12,8 +12,9 @@
 Rapid pagination without using OFFSET
 
 **UPDATE: 2021-06-08**  
-**Now Laravel officialy supports Cursor Pagination as of v8.41. Please don't use if you installs such versions.**
+**Now Laravel officialy supports Cursor Pagination as of v8.41. Please don't use if you installs such versions unless you choose `SQLServer` as RDBMS.**
   - **[Highly Performant Cursor Pagination in Laravel 8.41 | Laravel News](https://laravel-news.com/cursor-pagination)**
+  - **[SQL Feature Comparison](https://www.sql-workbench.eu/dbms_comparison.html)** (See "Tuple Comparison" section)
 
 ## Requirements
 
