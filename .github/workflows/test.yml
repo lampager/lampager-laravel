@@ -1,0 +1,88 @@
+name: Test
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php: [7.1, 7.2, 7.3, 7.4, 8.0]
+        lib:
+          - { laravel: ^8.0, testbench: ^6.0, composer_flags: --prefer-stable }
+          - { laravel: ^7.0, testbench: ^5.0, composer_flags: --prefer-stable }
+          - { laravel: ^6.0, testbench: ^4.0, composer_flags: --prefer-stable }
+          - { laravel: ^6.0, testbench: ^4.0, composer_flags: --prefer-stable --prefer-lowest } # LTS
+          - { laravel: 5.8.*, testbench: 3.8.*, composer_flags: --prefer-stable }
+          - { laravel: 5.7.*, testbench: 3.7.*, composer_flags: --prefer-stable }
+          - { laravel: 5.6.*, testbench: 3.6.*, composer_flags: --prefer-stable }
+          - { laravel: ~5.5.14, testbench: 3.5.*, composer_flags: --prefer-stable }
+          - { laravel: ~5.5.14, testbench: 3.5.*, composer_flags: --prefer-stable --prefer-lowest } # LTS
+        exclude:
+          # [6.x] PHP 7.4 support
+          # https://github.com/laravel/framework/pull/29482/files
+          - lib: { laravel: 5.8.*, testbench: 3.8.*, composer_flags: --prefer-stable }
+            php: 8.0
+          - lib: { laravel: 5.7.*, testbench: 3.7.*, composer_flags: --prefer-stable }
+            php: 8.0
+          - lib: { laravel: 5.6.*, testbench: 3.6.*, composer_flags: --prefer-stable }
+            php: 8.0
+          - lib: { laravel: ~5.5.14, testbench: 3.5.*, composer_flags: --prefer-stable }
+            php: 8.0
+          - lib: { laravel: ~5.5.14, testbench: 3.5.*, composer_flags: --prefer-stable --prefer-lowest }
+            php: 8.0
+          - lib: { laravel: 5.8.*, testbench: 3.8.*, composer_flags: --prefer-stable }
+            php: 7.4
+          - lib: { laravel: 5.7.*, testbench: 3.7.*, composer_flags: --prefer-stable }
+            php: 7.4
+          - lib: { laravel: 5.6.*, testbench: 3.6.*, composer_flags: --prefer-stable }
+            php: 7.4
+          - lib: { laravel: ~5.5.14, testbench: 3.5.*, composer_flags: --prefer-stable }
+            php: 7.4
+          - lib: { laravel: ~5.5.14, testbench: 3.5.*, composer_flags: --prefer-stable --prefer-lowest }
+            php: 7.4
+          # -------
+          # PHPUnit does not support coverage
+          - lib: { laravel: ^6.0, testbench: ^4.0, composer_flags: --prefer-stable --prefer-lowest }
+            php: 8.0
+          # -------
+          - lib: { laravel: ^8.0, testbench: ^6.0, composer_flags: --prefer-stable }
+            php: 7.2
+          - lib: { laravel: ^8.0, testbench: ^6.0, composer_flags: --prefer-stable }
+            php: 7.1
+          - lib: { laravel: ^7.0, testbench: ^5.0, composer_flags: --prefer-stable }
+            php: 7.1
+          - lib: { laravel: ^6.0, testbench: ^4.0, composer_flags: --prefer-stable }
+            php: 7.1
+          - lib: { laravel: ^6.0, testbench: ^4.0, composer_flags: --prefer-stable --prefer-lowest }
+            php: 7.1
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: xdebug
+
+      - name: Adjust package versions
+        run: |
+          composer require "laravel/framework:${{ matrix.lib.laravel }}" --dev --no-update ${{ matrix.lib.composer_flags }}
+          composer require "orchestra/testbench:${{ matrix.lib.testbench }}" --dev --no-update ${{ matrix.lib.composer_flags }}
+          composer update ${{ matrix.lib.composer_flags }}
+
+      - run: mkdir -p build/logs
+      - run: vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+
+      - name: Upload Coverage
+        uses: nick-invision/retry@v2
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          timeout_minutes: 1
+          max_attempts: 3
+          command: |
+            composer global require php-coveralls/php-coveralls
+            php-coveralls --coverage_clover=build/logs/clover.xml -v

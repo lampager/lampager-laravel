@@ -2,7 +2,7 @@
 <img width="320" alt="lampager-laravel" src="https://user-images.githubusercontent.com/1351893/31755018-9ab0c8ae-b4d6-11e7-9310-dbc372998ee4.png">
 </p>
 <p align="center">
-<a href="https://travis-ci.com/lampager/lampager-laravel"><img src="https://travis-ci.com/lampager/lampager-laravel.svg?branch=master" alt="Build Status"></a>
+<a href="https://github.com/lampager/lampager-laravel/actions"><img src="https://github.com/lampager/lampager-laravel/actions/workflows/test.yml/badge.svg?branch=master" alt="Build Status"></a>
 <a href="https://coveralls.io/github/lampager/lampager-laravel?branch=master"><img src="https://coveralls.io/repos/github/lampager/lampager-laravel/badge.svg?branch=master" alt="Coverage Status"></a>
 <a href="https://scrutinizer-ci.com/g/lampager/lampager-laravel/?branch=master"><img src="https://scrutinizer-ci.com/g/lampager/lampager-laravel/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality"></a>
 </p>
