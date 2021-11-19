@@ -15,17 +15,17 @@ class MacroServiceProvider extends ServiceProvider
     /**
      * Register "lampager" macros.
      */
-    public function register()
+    public function register(): void
     {
-        QueryBuilder::macro('lampager', function () {
+        QueryBuilder::macro('lampager', function (): Paginator {
             /* @var \Illuminate\Database\Query\Builder $this */
             return Paginator::create($this);
         });
-        EloquentBuilder::macro('lampager', function () {
+        EloquentBuilder::macro('lampager', function (): Paginator {
             /* @var \Illuminate\Database\Eloquent\Builder $this */
             return Paginator::create($this);
         });
-        Relation::macro('lampager', function () {
+        Relation::macro('lampager', function (): Paginator {
             /* @var \Illuminate\Database\Eloquent\Relations\Relation $this */
             return Paginator::create($this);
         });
