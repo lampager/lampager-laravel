@@ -23,7 +23,7 @@ Rapid pagination without using OFFSET
 ## Requirements
 
 - PHP: `^7.3 || ^8.0`
-- Laravel: `^6.0 || ^7.0 || ^8.0 || ^9.0`
+- Laravel: `^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0`
 - [lampager/lampager](https://github.com/lampager/lampager): `^0.4`
 
 ## Installing
