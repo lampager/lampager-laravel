@@ -2,6 +2,7 @@
 
 namespace Lampager\Laravel\Tests;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Arr;
 
@@ -111,11 +112,11 @@ class ResourceTest extends TestCase
         $this->assertResultSame($expected, (new StructuredPostResourceCollection($standardPagination))->resolve());
 
         $this->assertResultSame($expected, (new StructuredPostResourceCollection($records))
-            ->toResponse(null)->getData()
+            ->toResponse(Request::create('/'))->getData()
         );
         $this->assertResultSame($expected, (new PostResourceCollection($records))
             ->additional(['post_resource_collection' => true])
-            ->toResponse(null)->getData()
+            ->toResponse(Request::create('/'))->getData()
         );
     }
 
@@ -154,11 +155,11 @@ class ResourceTest extends TestCase
         $pagination = $this->getLampagerPagination();
 
         $this->assertResultSame($expected1, (new StructuredPostResourceCollection($pagination))
-            ->toResponse(null)->getData()
+            ->toResponse(Request::create('/'))->getData()
         );
         $this->assertResultSame($expected2, (new PostResourceCollection($pagination))
             ->additional(['post_resource_collection' => true])
-            ->toResponse(null)->getData()
+            ->toResponse(Request::create('/'))->getData()
         );
     }
 
@@ -206,11 +207,11 @@ class ResourceTest extends TestCase
         $pagination = $this->getStandardPagination();
 
         $this->assertResultSame($expected1, (new StructuredPostResourceCollection($pagination))
-            ->toResponse(null)->getData()
+            ->toResponse(Request::create('/'))->getData()
         );
         $this->assertResultSame($expected2, (new PostResourceCollection($pagination))
             ->additional(['post_resource_collection' => true])
-            ->toResponse(null)->getData()
+            ->toResponse(Request::create('/'))->getData()
         );
     }
 
@@ -256,6 +257,6 @@ class ResourceTest extends TestCase
             'has_next' => true,
             'next_cursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => 4],
         ];
-        $this->assertResultSame($expected, $collection->toResponse(null)->getData());
+        $this->assertResultSame($expected, $collection->toResponse(Request::create('/'))->getData());
     }
 }
