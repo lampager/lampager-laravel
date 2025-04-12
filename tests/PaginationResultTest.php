@@ -3,6 +3,7 @@
 namespace Lampager\Laravel\Tests;
 
 use Lampager\Laravel\PaginationResult;
+use PHPUnit\Framework\Attributes\Test;
 
 class PaginationResultTest extends TestCase
 {
@@ -18,10 +19,8 @@ class PaginationResultTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testMacroCall()
+    #[Test]
+    public function testMacroCall(): void
     {
         PaginationResult::macro('meta', function () {
             $vars = $this->toArray();
@@ -46,10 +45,8 @@ class PaginationResultTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testCollectionCall()
+    #[Test]
+    public function testCollectionCall(): void
     {
         $result = Post::lampager()
             ->forward()->limit(3)
@@ -64,10 +61,8 @@ class PaginationResultTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testJsonEncodeWithOption()
+    #[Test]
+    public function testJsonEncodeWithOption(): void
     {
         $actual = Post::lampager()
             ->forward()->limit(3)
@@ -80,33 +75,33 @@ class PaginationResultTest extends TestCase
         $format = [EloquentDate::class, 'format'];
 
         $expected = <<<EOD
-{
-    "records": [
-        {
-            "id": 3,
-            "updated_at": "{$format('2017-01-01 10:00:00')}"
-        },
-        {
-            "id": 5,
-            "updated_at": "{$format('2017-01-01 10:00:00')}"
-        },
-        {
-            "id": 2,
-            "updated_at": "{$format('2017-01-01 11:00:00')}"
-        }
-    ],
-    "has_previous": true,
-    "previous_cursor": {
-        "updated_at": "2017-01-01 10:00:00",
-        "id": 1
-    },
-    "has_next": true,
-    "next_cursor": {
-        "updated_at": "2017-01-01 11:00:00",
-        "id": 4
-    }
-}
-EOD;
+            {
+                "records": [
+                    {
+                        "id": 3,
+                        "updated_at": "{$format('2017-01-01 10:00:00')}"
+                    },
+                    {
+                        "id": 5,
+                        "updated_at": "{$format('2017-01-01 10:00:00')}"
+                    },
+                    {
+                        "id": 2,
+                        "updated_at": "{$format('2017-01-01 11:00:00')}"
+                    }
+                ],
+                "has_previous": true,
+                "previous_cursor": {
+                    "updated_at": "2017-01-01 10:00:00",
+                    "id": 1
+                },
+                "has_next": true,
+                "next_cursor": {
+                    "updated_at": "2017-01-01 11:00:00",
+                    "id": 4
+                }
+            }
+            EOD;
         $this->assertSame($expected, $actual);
     }
 }

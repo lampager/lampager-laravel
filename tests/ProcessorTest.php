@@ -2,6 +2,8 @@
 
 namespace Lampager\Laravel\Tests;
 
+use PHPUnit\Framework\Attributes\Test;
+
 class ProcessorTest extends TestCase
 {
     /**
@@ -16,10 +18,8 @@ class ProcessorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testAscendingForwardStartInclusive()
+    #[Test]
+    public function testAscendingForwardStartInclusive(): void
     {
         $this->assertResultSame(
             [
@@ -42,10 +42,8 @@ class ProcessorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testAscendingForwardStartExclusive()
+    #[Test]
+    public function testAscendingForwardStartExclusive(): void
     {
         $this->assertResultSame(
             [
@@ -69,10 +67,8 @@ class ProcessorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testAscendingForwardInclusive()
+    #[Test]
+    public function testAscendingForwardInclusive(): void
     {
         $this->assertResultSame(
             [
@@ -95,10 +91,8 @@ class ProcessorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testAscendingForwardExclusive()
+    #[Test]
+    public function testAscendingForwardExclusive(): void
     {
         $this->assertResultSame(
             [
@@ -122,10 +116,8 @@ class ProcessorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testAscendingBackwardStartInclusive()
+    #[Test]
+    public function testAscendingBackwardStartInclusive(): void
     {
         $this->assertResultSame(
             [
@@ -148,10 +140,8 @@ class ProcessorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testAscendingBackwardStartExclusive()
+    #[Test]
+    public function testAscendingBackwardStartExclusive(): void
     {
         $this->assertResultSame(
             [
@@ -175,10 +165,8 @@ class ProcessorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testAscendingBackwardInclusive()
+    #[Test]
+    public function testAscendingBackwardInclusive(): void
     {
         $this->assertResultSame(
             [
@@ -200,10 +188,8 @@ class ProcessorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testAscendingBackwardExclusive()
+    #[Test]
+    public function testAscendingBackwardExclusive(): void
     {
         $this->assertResultSame(
             [
@@ -225,10 +211,8 @@ class ProcessorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testDescendingForwardStartInclusive()
+    #[Test]
+    public function testDescendingForwardStartInclusive(): void
     {
         $this->assertResultSame(
             [
@@ -251,10 +235,8 @@ class ProcessorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testDescendingForwardStartExclusive()
+    #[Test]
+    public function testDescendingForwardStartExclusive(): void
     {
         $this->assertResultSame(
             [
@@ -278,10 +260,8 @@ class ProcessorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testDescendingForwardInclusive()
+    #[Test]
+    public function testDescendingForwardInclusive(): void
     {
         $this->assertResultSame(
             [
@@ -303,10 +283,8 @@ class ProcessorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testDescendingForwardExclusive()
+    #[Test]
+    public function testDescendingForwardExclusive(): void
     {
         $this->assertResultSame(
             [
@@ -328,10 +306,8 @@ class ProcessorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testDescendingBackwardStartInclusive()
+    #[Test]
+    public function testDescendingBackwardStartInclusive(): void
     {
         $this->assertResultSame(
             [
@@ -354,10 +330,8 @@ class ProcessorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testDescendingBackwardStartExclusive()
+    #[Test]
+    public function testDescendingBackwardStartExclusive(): void
     {
         $this->assertResultSame(
             [
@@ -381,10 +355,8 @@ class ProcessorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testDescendingBackwardInclusive()
+    #[Test]
+    public function testDescendingBackwardInclusive(): void
     {
         $this->assertResultSame(
             [
@@ -407,10 +379,8 @@ class ProcessorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testDescendingBackwardExclusive()
+    #[Test]
+    public function testDescendingBackwardExclusive(): void
     {
         $this->assertResultSame(
             [
@@ -434,10 +404,8 @@ class ProcessorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testBelongsToManyOrderByPivot()
+    #[Test]
+    public function testBelongsToManyOrderByPivot(): void
     {
         $this->assertResultSame(
             [
@@ -460,10 +428,8 @@ class ProcessorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testBelongsToManyOrderBySource()
+    #[Test]
+    public function testBelongsToManyOrderBySource(): void
     {
         $this->assertResultSame(
             [
@@ -486,10 +452,8 @@ class ProcessorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testBelongsToManyWithoutPivotKey()
+    #[Test]
+    public function testBelongsToManyWithoutPivotKey(): void
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The column `id` is not included in the pivot "pivot".');

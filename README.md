@@ -4,27 +4,24 @@
 <p align="center">
 <a href="https://github.com/lampager/lampager-laravel/actions"><img src="https://github.com/lampager/lampager-laravel/actions/workflows/test.yml/badge.svg?branch=master" alt="Build Status"></a>
 <a href="https://coveralls.io/github/lampager/lampager-laravel?branch=master"><img src="https://coveralls.io/repos/github/lampager/lampager-laravel/badge.svg?branch=master" alt="Coverage Status"></a>
-<a href="https://scrutinizer-ci.com/g/lampager/lampager-laravel/?branch=master"><img src="https://scrutinizer-ci.com/g/lampager/lampager-laravel/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality"></a>
-</p>
 
 # Lampager for Laravel
 
 Rapid pagination without using OFFSET
 
-<!--
-[Better Query Planning · Issue #38 · lampager/lampager](https://github.com/lampager/lampager/issues/38)
-
-**UPDATE: 2021-06-08**  
-**Now Laravel officialy supports Cursor Pagination as of v8.41. Please don't use if you installs such versions unless you choose `SQLServer` as RDBMS.**
-  - **[Highly Performant Cursor Pagination in Laravel 8.41 | Laravel News](https://laravel-news.com/cursor-pagination)**
-  - **[SQL Feature Comparison](https://www.sql-workbench.eu/dbms_comparison.html)** (See "Tuple Comparison" section)
--->
+> [!CAUTION]
+> **Now Laravel officialy supports Cursor Pagination as of v8.41. Please don't use if you install such versions unless you choose `SQLServer` as RDBMS.**
+> - **[Highly Performant Cursor Pagination in Laravel 8.41 | Laravel News](https://laravel-news.com/cursor-pagination)**
+> - **[SQL Feature Comparison](https://www.sql-workbench.eu/dbms_comparison.html)** (See "Tuple Comparison" section)
 
 ## Requirements
 
-- PHP: `^8.0`
-- Laravel: `^9.0 || ^10.0 || ^11.0`
-- [lampager/lampager](https://github.com/lampager/lampager): `^0.4`
+> [!NOTE]
+> Older versions have outdated dependency requirements. If you cannot prepare the latest environment, please refer to past releases.
+
+- PHP: `^8.2`
+- Laravel: `^11.0 || ^12.0`
+- [lampager/lampager](https://github.com/lampager/lampager): `^0.5`
 
 ## Installing
 
