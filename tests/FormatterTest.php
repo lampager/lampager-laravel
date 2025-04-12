@@ -5,13 +5,12 @@ namespace Lampager\Laravel\Tests;
 use Illuminate\Support\Collection;
 use Lampager\Laravel\Processor;
 use Lampager\Query;
+use PHPUnit\Framework\Attributes\Test;
 
 class FormatterTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function testStaticCustomFormatter()
+    #[Test]
+    public function testStaticCustomFormatter(): void
     {
         try {
             Processor::setDefaultFormatter(function ($rows, $meta, Query $query) {
@@ -30,10 +29,8 @@ class FormatterTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     */
-    public function testInstanceCustomFormatter()
+    #[Test]
+    public function testInstanceCustomFormatter(): void
     {
         $pager = Post::lampager();
         try {
@@ -52,19 +49,15 @@ class FormatterTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     */
-    public function testInvalidFormatter()
+    #[Test]
+    public function testInvalidFormatter(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         Post::lampager()->useProcessor(function () {});
     }
 
-    /**
-     * @test
-     */
-    public function testInvalidProcessor()
+    #[Test]
+    public function testInvalidProcessor(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         Post::lampager()->useFormatter(__CLASS__);

@@ -4,6 +4,7 @@ namespace Lampager\Laravel\Tests;
 
 use NilPortugues\Sql\QueryFormatter\Formatter;
 use Orchestra\Testbench\TestCase as BaseTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class MySQLGrammarTest extends TestCase
 {
@@ -12,12 +13,11 @@ class MySQLGrammarTest extends TestCase
      */
     protected function getEnvironmentSetUp($app)
     {
-        // Skip SQLite setup and use default MySQL configuration
+        $app['config']->set('database.default', 'mysql');
     }
 
     protected function setUp(): void
     {
-        // Skip SQLite setup and use default MySQL configuration
         BaseTestCase::setUp();
     }
 
@@ -25,16 +25,14 @@ class MySQLGrammarTest extends TestCase
      * @param $expected
      * @param $actual
      */
-    protected function assertSqlEquals($expected, $actual)
+    protected function assertSqlEquals($expected, $actual): void
     {
         $formatter = new Formatter();
         $this->assertEquals($formatter->format($expected), $formatter->format($actual));
     }
 
-    /**
-     * @test
-     */
-    public function testAscendingForwardStart()
+    #[Test]
+    public function testAscendingForwardStart(): void
     {
         $builder = Post::whereUserId(2)
             ->lampager()
@@ -52,10 +50,8 @@ class MySQLGrammarTest extends TestCase
         ', $builder->toSql());
     }
 
-    /**
-     * @test
-     */
-    public function testAscendingForwardInclusive()
+    #[Test]
+    public function testAscendingForwardInclusive(): void
     {
         $cursor = ['updated_at' => '', 'created_at' => '', 'id' => ''];
         $builder = Post::whereUserId(2)
@@ -91,10 +87,8 @@ class MySQLGrammarTest extends TestCase
         ', $builder->toSql());
     }
 
-    /**
-     * @test
-     */
-    public function testAscendingForwardExclusive()
+    #[Test]
+    public function testAscendingForwardExclusive(): void
     {
         $cursor = ['updated_at' => '', 'created_at' => '', 'id' => ''];
         $builder = Post::whereUserId(2)
@@ -131,10 +125,8 @@ class MySQLGrammarTest extends TestCase
         ', $builder->toSql());
     }
 
-    /**
-     * @test
-     */
-    public function testAscendingBackwardStart()
+    #[Test]
+    public function testAscendingBackwardStart(): void
     {
         $builder = Post::whereUserId(2)
             ->lampager()
@@ -152,10 +144,8 @@ class MySQLGrammarTest extends TestCase
         ', $builder->toSql());
     }
 
-    /**
-     * @test
-     */
-    public function testAscendingBackwardInclusive()
+    #[Test]
+    public function testAscendingBackwardInclusive(): void
     {
         $cursor = ['updated_at' => '', 'created_at' => '', 'id' => ''];
         $builder = Post::whereUserId(2)
@@ -191,10 +181,8 @@ class MySQLGrammarTest extends TestCase
         ', $builder->toSql());
     }
 
-    /**
-     * @test
-     */
-    public function testAscendingBackwardExclusive()
+    #[Test]
+    public function testAscendingBackwardExclusive(): void
     {
         $cursor = ['updated_at' => '', 'created_at' => '', 'id' => ''];
         $builder = Post::whereUserId(2)
@@ -231,10 +219,8 @@ class MySQLGrammarTest extends TestCase
         ', $builder->toSql());
     }
 
-    /**
-     * @test
-     */
-    public function testDescendingForwardStart()
+    #[Test]
+    public function testDescendingForwardStart(): void
     {
         $builder = Post::whereUserId(2)
             ->lampager()
@@ -252,10 +238,8 @@ class MySQLGrammarTest extends TestCase
         ', $builder->toSql());
     }
 
-    /**
-     * @test
-     */
-    public function testDescendingForwardInclusive()
+    #[Test]
+    public function testDescendingForwardInclusive(): void
     {
         $cursor = ['updated_at' => '', 'created_at' => '', 'id' => ''];
         $builder = Post::whereUserId(2)
@@ -291,10 +275,8 @@ class MySQLGrammarTest extends TestCase
         ', $builder->toSql());
     }
 
-    /**
-     * @test
-     */
-    public function testDescendingForwardExclusive()
+    #[Test]
+    public function testDescendingForwardExclusive(): void
     {
         $cursor = ['updated_at' => '', 'created_at' => '', 'id' => ''];
         $builder = Post::whereUserId(2)
@@ -331,10 +313,8 @@ class MySQLGrammarTest extends TestCase
         ', $builder->toSql());
     }
 
-    /**
-     * @test
-     */
-    public function testDescendingBackwardStart()
+    #[Test]
+    public function testDescendingBackwardStart(): void
     {
         $builder = Post::whereUserId(2)
             ->lampager()
@@ -352,10 +332,8 @@ class MySQLGrammarTest extends TestCase
         ', $builder->toSql());
     }
 
-    /**
-     * @test
-     */
-    public function testDescendingBackwardInclusive()
+    #[Test]
+    public function testDescendingBackwardInclusive(): void
     {
         $cursor = ['updated_at' => '', 'created_at' => '', 'id' => ''];
         $builder = Post::whereUserId(2)
@@ -391,10 +369,8 @@ class MySQLGrammarTest extends TestCase
         ', $builder->toSql());
     }
 
-    /**
-     * @test
-     */
-    public function testDescendingBackwardExclusive()
+    #[Test]
+    public function testDescendingBackwardExclusive(): void
     {
         $cursor = ['updated_at' => '', 'created_at' => '', 'id' => ''];
         $builder = Post::whereUserId(2)
@@ -431,10 +407,8 @@ class MySQLGrammarTest extends TestCase
         ', $builder->toSql());
     }
 
-    /**
-     * @test
-     */
-    public function testBelongsToManyOrderByPivot()
+    #[Test]
+    public function testBelongsToManyOrderByPivot(): void
     {
         $cursor = ['pivot_id' => 2];
 
@@ -477,10 +451,8 @@ class MySQLGrammarTest extends TestCase
         ', $builder->toSql());
     }
 
-    /**
-     * @test
-     */
-    public function testBelongsToManyOrderBySource()
+    #[Test]
+    public function testBelongsToManyOrderBySource(): void
     {
         $cursor = ['posts.id' => 2];
 

@@ -5,6 +5,7 @@ namespace Lampager\Laravel\Tests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 
 class ResourceTest extends TestCase
 {
@@ -45,10 +46,8 @@ class ResourceTest extends TestCase
             ->simplePaginate(3);
     }
 
-    /**
-     * @test
-     */
-    public function testRawArrayOutput()
+    #[Test]
+    public function testRawArrayOutput(): void
     {
         $expected = [
             [
@@ -77,10 +76,8 @@ class ResourceTest extends TestCase
         $this->assertResultSame($expected, (new PostResourceCollection($standardPagination))->resolve());
     }
 
-    /**
-     * @test
-     */
-    public function testStructuredArrayOutput()
+    #[Test]
+    public function testStructuredArrayOutput(): void
     {
         $expected = [
             'data' => [
@@ -120,10 +117,8 @@ class ResourceTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testLampagerPaginationOutput()
+    #[Test]
+    public function testLampagerPaginationOutput(): void
     {
         $expected1 = [
             'data' => [
@@ -163,10 +158,8 @@ class ResourceTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testStandardPaginationOutput()
+    #[Test]
+    public function testStandardPaginationOutput(): void
     {
         $expected1 = [
             'data' => [
@@ -215,10 +208,8 @@ class ResourceTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testMissingValue()
+    #[Test]
+    public function testMissingValue(): void
     {
         $expected = ['id' => 1];
         $actual = (new TagResource(Tag::find(1)))->resolve();
@@ -226,10 +217,8 @@ class ResourceTest extends TestCase
         $this->assertResultSame($expected, $actual);
     }
 
-    /**
-     * @test
-     */
-    public function testAnonymousResourceCollection()
+    #[Test]
+    public function testAnonymousResourceCollection(): void
     {
         $collection = PostResource::collection($this->getLampagerPagination());
         $this->assertInstanceOf(AnonymousResourceCollection::class, $collection);

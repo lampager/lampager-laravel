@@ -28,7 +28,7 @@ class PaginationResult extends BasePaginationResult implements \JsonSerializable
      * @param  array  $parameters
      * @return mixed
      */
-    public function __call($method, array $parameters)
+    public function __call($method, $parameters)
     {
         if (static::hasMacro($method)) {
             return $this->macroCall($method, $parameters);
