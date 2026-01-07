@@ -165,7 +165,20 @@ class ResourceTest extends TestCase
     #[Test]
     public function testStandardPaginationOutput(): void
     {
-        // with() data is merged at the end, current_page_url added in Laravel 11+
+        $pagination = $this->getStandardPagination();
+
+        $actual1 = (new StructuredPostResourceCollection($pagination))
+            ->toResponse(Request::create('/'))->getData();
+        $actual2 = (new PostResourceCollection($pagination))
+            ->additional(['post_resource_collection' => true])
+            ->toResponse(Request::create('/'))->getData();
+
+        // Normalize: current_page_url was added in Laravel 12+
+        $actual1 = json_decode(json_encode($actual1), true);
+        $actual2 = json_decode(json_encode($actual2), true);
+        unset($actual1['meta']['current_page_url'], $actual2['meta']['current_page_url']);
+
+        // with() data is merged at the end
         $expected = [
             'data' => [
                 [
@@ -192,7 +205,6 @@ class ResourceTest extends TestCase
             ],
             'meta' => [
                 'current_page' => 1,
-                'current_page_url' => 'http://localhost?page=1',
                 'from' => 1,
                 'path' => 'http://localhost',
                 'per_page' => 3,
@@ -201,15 +213,8 @@ class ResourceTest extends TestCase
             'post_resource_collection' => true,
         ];
 
-        $pagination = $this->getStandardPagination();
-
-        $this->assertResultSame($expected, (new StructuredPostResourceCollection($pagination))
-            ->toResponse(Request::create('/'))->getData()
-        );
-        $this->assertResultSame($expected, (new PostResourceCollection($pagination))
-            ->additional(['post_resource_collection' => true])
-            ->toResponse(Request::create('/'))->getData()
-        );
+        $this->assertResultSame($expected, $actual1);
+        $this->assertResultSame($expected, $actual2);
     }
 
     #[Test]
