@@ -4,7 +4,6 @@ namespace Lampager\Laravel\Tests;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Support\Arr;
 use PHPUnit\Framework\Attributes\Test;
 
 class ResourceTest extends TestCase
@@ -79,6 +78,54 @@ class ResourceTest extends TestCase
     #[Test]
     public function testStructuredArrayOutput(): void
     {
+        // Since Laravel 11, resolve() calls toAttributes() which returns
+        // the collection items directly, bypassing toArray() structure
+        $expectedResolved = [
+            [
+                'id' => 3,
+                'updated_at' => EloquentDate::format('2017-01-01 10:00:00'),
+                'post_resource' => true,
+            ],
+            [
+                'id' => 5,
+                'updated_at' => EloquentDate::format('2017-01-01 10:00:00'),
+                'post_resource' => true,
+            ],
+            [
+                'id' => 2,
+                'updated_at' => EloquentDate::format('2017-01-01 11:00:00'),
+                'post_resource' => true,
+            ],
+        ];
+
+        $expectedResponse = [
+            'data' => $expectedResolved,
+            'post_resource_collection' => true,
+        ];
+
+        $pagination = $this->getLampagerPagination();
+        $records = $pagination->records;
+        $standardPagination = $this->getStandardPagination();
+
+        // resolve() now returns collection items directly (Laravel 11+ behavior)
+        $this->assertResultSame($expectedResolved, (new StructuredPostResourceCollection($pagination))->resolve());
+        $this->assertResultSame($expectedResolved, (new StructuredPostResourceCollection($records))->resolve());
+        $this->assertResultSame($expectedResolved, (new StructuredPostResourceCollection($standardPagination))->resolve());
+
+        // toResponse() still uses toArray() structure
+        $this->assertResultSame($expectedResponse, (new StructuredPostResourceCollection($records))
+            ->toResponse(Request::create('/'))->getData()
+        );
+        $this->assertResultSame($expectedResponse, (new PostResourceCollection($records))
+            ->additional(['post_resource_collection' => true])
+            ->toResponse(Request::create('/'))->getData()
+        );
+    }
+
+    #[Test]
+    public function testLampagerPaginationOutput(): void
+    {
+        // with() data is merged at the end
         $expected = [
             'data' => [
                 [
@@ -97,62 +144,19 @@ class ResourceTest extends TestCase
                     'post_resource' => true,
                 ],
             ],
-            'post_resource_collection' => true,
-        ];
-
-        $pagination = $this->getLampagerPagination();
-        $records = $pagination->records;
-        $standardPagination = $this->getStandardPagination();
-
-        $this->assertResultSame($expected, (new StructuredPostResourceCollection($pagination))->resolve());
-        $this->assertResultSame($expected, (new StructuredPostResourceCollection($records))->resolve());
-        $this->assertResultSame($expected, (new StructuredPostResourceCollection($standardPagination))->resolve());
-
-        $this->assertResultSame($expected, (new StructuredPostResourceCollection($records))
-            ->toResponse(Request::create('/'))->getData()
-        );
-        $this->assertResultSame($expected, (new PostResourceCollection($records))
-            ->additional(['post_resource_collection' => true])
-            ->toResponse(Request::create('/'))->getData()
-        );
-    }
-
-    #[Test]
-    public function testLampagerPaginationOutput(): void
-    {
-        $expected1 = [
-            'data' => [
-                [
-                    'id' => 3,
-                    'updated_at' => EloquentDate::format('2017-01-01 10:00:00'),
-                    'post_resource' => true,
-                ],
-                [
-                    'id' => 5,
-                    'updated_at' => EloquentDate::format('2017-01-01 10:00:00'),
-                    'post_resource' => true,
-                ],
-                [
-                    'id' => 2,
-                    'updated_at' => EloquentDate::format('2017-01-01 11:00:00'),
-                    'post_resource' => true,
-                ],
-            ],
-            'post_resource_collection' => true,
             'has_previous' => true,
             'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => 1],
             'has_next' => true,
             'next_cursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => 4],
+            'post_resource_collection' => true,
         ];
-        // different order
-        $expected2 = Arr::except($expected1, 'post_resource_collection') + ['post_resource_collection' => true];
 
         $pagination = $this->getLampagerPagination();
 
-        $this->assertResultSame($expected1, (new StructuredPostResourceCollection($pagination))
+        $this->assertResultSame($expected, (new StructuredPostResourceCollection($pagination))
             ->toResponse(Request::create('/'))->getData()
         );
-        $this->assertResultSame($expected2, (new PostResourceCollection($pagination))
+        $this->assertResultSame($expected, (new PostResourceCollection($pagination))
             ->additional(['post_resource_collection' => true])
             ->toResponse(Request::create('/'))->getData()
         );
@@ -161,7 +165,8 @@ class ResourceTest extends TestCase
     #[Test]
     public function testStandardPaginationOutput(): void
     {
-        $expected1 = [
+        // with() data is merged at the end, current_page_url added in Laravel 11+
+        $expected = [
             'data' => [
                 [
                     'id' => 3,
@@ -179,7 +184,6 @@ class ResourceTest extends TestCase
                     'post_resource' => true,
                 ],
             ],
-            'post_resource_collection' => true,
             'links' => [
                 'first' => 'http://localhost?page=1',
                 'last' => null,
@@ -188,21 +192,21 @@ class ResourceTest extends TestCase
             ],
             'meta' => [
                 'current_page' => 1,
+                'current_page_url' => 'http://localhost?page=1',
                 'from' => 1,
                 'path' => 'http://localhost',
                 'per_page' => 3,
                 'to' => 3,
             ],
+            'post_resource_collection' => true,
         ];
-        // different order
-        $expected2 = Arr::except($expected1, 'post_resource_collection') + ['post_resource_collection' => true];
 
         $pagination = $this->getStandardPagination();
 
-        $this->assertResultSame($expected1, (new StructuredPostResourceCollection($pagination))
+        $this->assertResultSame($expected, (new StructuredPostResourceCollection($pagination))
             ->toResponse(Request::create('/'))->getData()
         );
-        $this->assertResultSame($expected2, (new PostResourceCollection($pagination))
+        $this->assertResultSame($expected, (new PostResourceCollection($pagination))
             ->additional(['post_resource_collection' => true])
             ->toResponse(Request::create('/'))->getData()
         );

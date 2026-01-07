@@ -15,13 +15,14 @@ class StructuredPostResourceCollection extends ResourceCollection
     public $collects = PostResource::class;
 
     /**
-     * @param  \Illuminate\Http\Request $request
+     * Get additional data that should be returned with the resource array.
+     *
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function toArray($request)
+    public function with($request)
     {
         return [
-            static::$wrap => parent::toArray($request),
             'post_resource_collection' => true,
         ];
     }
