@@ -20,7 +20,7 @@ Rapid pagination without using OFFSET
 > Older versions have outdated dependency requirements. If you cannot prepare the latest environment, please refer to past releases.
 
 - PHP: `^8.2`
-- Laravel: `^11.0 || ^12.0`
+- Laravel: `^11.0 || ^12.0 || ^13.0`
 - [lampager/lampager](https://github.com/lampager/lampager): `^0.5`
 
 ## Installing
